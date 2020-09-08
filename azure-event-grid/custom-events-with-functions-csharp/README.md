@@ -1,1 +1,1 @@
-﻿# How to send custom events to Azure Event Grid with Azure Functions (C#)
+﻿# Send custom events to Event Grid with Azure Functions (C#)
