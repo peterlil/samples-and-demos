@@ -3,6 +3,7 @@
 
 ![Image 1](./media/custom-events.png)
 
-Start by provisioning the required Azure resources. 
+Start by provisioning the required Azure resources:
+* Azure Key Vault 
 
 
