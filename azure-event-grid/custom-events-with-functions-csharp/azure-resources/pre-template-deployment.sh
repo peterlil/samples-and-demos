@@ -1,4 +1,4 @@
-﻿az --version
+﻿/usr/bin/az --version
 echo $1
 echo $2
 ## First argument is the resource group name
