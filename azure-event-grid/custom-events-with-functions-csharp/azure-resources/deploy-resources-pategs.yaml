@@ -18,6 +18,8 @@ steps:
 - script: |
     pwd
     ls -R
+    echo $(pategs.ResourceGroup)
+    echo $(pategs.Location)
   displayName: 'Checking environment'
 
 - task: AzureCLI@2
