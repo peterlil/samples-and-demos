@@ -14,7 +14,7 @@ steps:
 
 - script: |
     pwd
-    tree .
+    ls -R
   displayName: 'Checking environment'
 
 - task: AzureCLI@2
