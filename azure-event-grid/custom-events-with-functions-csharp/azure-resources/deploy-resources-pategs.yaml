@@ -18,8 +18,8 @@ steps:
 - script: |
     pwd
     ls -R
-    echo $(pategs.ResourceGroup)
-    echo $(pategs.Location)
+    echo $(ResourceGroup)
+    echo $(Location)
   displayName: 'Checking environment'
 
 - task: AzureCLI@2
@@ -29,4 +29,4 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azure-event-grid/custom-events-with-functions-csharp/azure-resources/pre-template-deployment.sh'
-    arguments: '$(pategs.ResourceGroup) $(pategs.Location)'
+    arguments: '$(ResourceGroup) $(Location)'
