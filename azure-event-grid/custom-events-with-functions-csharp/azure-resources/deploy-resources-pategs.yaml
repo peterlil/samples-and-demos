@@ -24,4 +24,4 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azure-event-grid/custom-events-with-functions-csharp/azure-resources/pre-template-deployment.sh'
-    arguments: 'MyResourceGroup "North Europe"'
+    arguments: 'MyResourceGroup northeurope'
