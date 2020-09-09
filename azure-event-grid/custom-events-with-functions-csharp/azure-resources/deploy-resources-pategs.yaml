@@ -4,6 +4,9 @@
 trigger:
 - keyvault
 
+variables:
+- group: pategs
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -24,4 +27,4 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azure-event-grid/custom-events-with-functions-csharp/azure-resources/pre-template-deployment.sh'
-    arguments: 'MyResourceGroup northeurope'
+    arguments: '$(pategs.ResourceGroup) $(pategs.Location)'

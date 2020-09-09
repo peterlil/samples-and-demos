@@ -1,9 +1,4 @@
-﻿
-#echo '##[debug]Line 2'
-#az_version=$(/usr/bin/az --version)
-#echo "##[debug]$az_version"
-
-# First argument is the resource group name
+﻿# First argument is the resource group name
 rgName=$1
 # Second argument is the location of the resource group
 location=$2
