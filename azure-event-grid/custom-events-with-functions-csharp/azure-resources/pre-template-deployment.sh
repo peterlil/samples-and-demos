@@ -23,8 +23,8 @@ fi
 # in to source control, hence they are not in the parameter file.
 #
 #echo $(pwd)
-sed -i 's/#keyvaultname#/$keyVaultName/' ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
-sed -i 's/#objectIdOfUser#/$keyVaultOwnerObjectID/' ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
+sed -i "s/#keyvaultname#/$keyVaultName/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
+sed -i "s/#objectIdOfUser#/$keyVaultOwnerObjectID/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
 
 pFile=$(cat ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
 echo "##[debug]$pFile"
