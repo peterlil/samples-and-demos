@@ -1,10 +1,12 @@
-﻿#
+﻿#!/bin/bash
 # First argument is the resource group name
 rgName=$1
 # Second argument is the location of the resource group
 location=$2
 # Third argument is the name of the Key Vault
 keyVaultName=$3
+# Third argument is the object ID of the service principal creating the Key Vault
+keyVaultOwnerObjectID=$4
 
 ################################################################################
 ### Create the resource group
@@ -22,3 +24,7 @@ fi
 #
 #echo $(pwd)
 sed -i 's/#keyvaultname#/$keyVaultName/' ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
+sed -i 's/#objectIdOfUser#/$keyVaultOwnerObjectID/' ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
+
+pFile=$(cat ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
+echo "##[debug]$pFile"
