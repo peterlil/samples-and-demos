@@ -23,5 +23,5 @@ steps:
     azureSubscription: 'Personal Azure Training(05c25b78-003c-49ef-8f02-b24ca4aca086)'
     scriptType: 'sh'
     scriptLocation: 'scriptPath'
-    scriptPath: 'azure-event-grid/custom-events-with-functions-csharp/azure-resources/pre-template-deployment.ps1'
+    scriptPath: 'azure-event-grid/custom-events-with-functions-csharp/azure-resources/pre-template-deployment.sh'
     arguments: 'MyResourceGroup "North Europe"'
