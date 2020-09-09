@@ -25,7 +25,7 @@ steps:
 - task: AzureCLI@2
   inputs:
     displayName: 'Pre template deployment script'
-    azureSubscription: 'Personal Azure Training(05c25b78-003c-49ef-8f02-b24ca4aca086)'
+    azureSubscription: '$(Subscription)'
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azure-event-grid/custom-events-with-functions-csharp/azure-resources/pre-template-deployment.sh'
