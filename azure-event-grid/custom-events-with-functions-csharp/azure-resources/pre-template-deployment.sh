@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 # First argument is the resource group name
 rgName=$1
 # Second argument is the location of the resource group
@@ -49,3 +49,8 @@ result=$(az deployment group create \
 
 echo "##[debug]$result"
 
+################################################################################
+### Prepare for linked deployment templates
+################################################################################
+
+# Create a deployment container for 
