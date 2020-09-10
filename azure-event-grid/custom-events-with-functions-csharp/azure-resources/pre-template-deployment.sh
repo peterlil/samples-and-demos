@@ -92,17 +92,16 @@ sasToken=`az storage container generate-sas -n $deploymentContainerName \
 echo "##[command]Getting the storage key"
 storageKey=`az storage account keys list --account-name $storageAccountName | jq -r '.[0].value'`
 
-echo "##[debug]$storageKey"
-
 echo "##[group]Upload all ARM templates to the new blob"
 # Upload all ARM templates by uploading all .json files in the azure-resources folder
 for i in ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/*.json; do
     [ -f "$i" ] || break
-    echo $i
+    echo "##[debug]$i"
+    filename=`basename $i`
     result=`az storage blob upload \
-        -f "./azure-event-grid/custom-events-with-functions-csharp/azure-resources/$i" \
+        -f "$i" \
         -c $deploymentContainerName \
-        -n $i \
+        -n $filename \
         --account-name $storageAccountName \
         --account-key $storageKey`
     echo "##[debug]$result"
