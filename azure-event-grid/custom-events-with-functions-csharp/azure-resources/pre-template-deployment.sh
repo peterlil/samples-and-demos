@@ -9,6 +9,16 @@ keyVaultName=$3
 keyVaultOwnerObjectID=$4
 
 ################################################################################
+### If not logged in, then do it as the script is not running in DevOps
+################################################################################
+noAzLocations=`az account list-locations | jq '. | length'`
+
+if [ $noAzLocations -le 5 ]; then
+    az login
+fi
+
+
+################################################################################
 ### Create the resource group
 ################################################################################
 if [ $(az group exists --name $rgName) = false ]; then
@@ -79,6 +89,9 @@ result=`az storage container create \
 echo "##[debug]$result"
 echo "##[endgroup]"
 
+echo "##[command]Getting the storage key"
+storageKey=`az storage account keys list --account-name $storageAccountName | jq -r '.[0].value'`
+
 echo "##[command]Generating SAS token"
 sasEnd=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
 sasToken=`az storage container generate-sas -n $deploymentContainerName \
@@ -86,11 +99,8 @@ sasToken=`az storage container generate-sas -n $deploymentContainerName \
     --https-only --permissions dlrw \
     --expiry $sasEnd \
     -o tsv \
-    --auth-mode login \
-    --as-user`
-
-echo "##[command]Getting the storage key"
-storageKey=`az storage account keys list --account-name $storageAccountName | jq -r '.[0].value'`
+    --auth-mode key \
+    --account-key $storageKey`
 
 echo "##[group]Upload all ARM templates to the new blob"
 # Upload all ARM templates by uploading all .json files in the azure-resources folder
@@ -102,6 +112,7 @@ for i in ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/
         -f "$i" \
         -c $deploymentContainerName \
         -n $filename \
+        --content-type "application/octet-stream" \
         --account-name $storageAccountName \
         --account-key $storageKey`
     echo "##[debug]$result"
@@ -115,8 +126,6 @@ echo "##[endgroup]"
 echo "##[group]Deploying linked templates"
 
 _artifactsLocation="https://$storageAccountName.blob.core.windows.net/$deploymentContainerName"
-
-echo "##[debug]$_artifactsLocation/azuredeploy.master.json?$sasToken"
 
 result=`az deployment group create \
   --name 'CICD-deployment' \
