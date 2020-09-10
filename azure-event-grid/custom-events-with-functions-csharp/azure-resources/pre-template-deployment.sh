@@ -106,7 +106,7 @@ sasToken=`az storage container generate-sas -n $deploymentContainerName \
 echo "##[group]Prepare template parameters"
 appInsightsParameterFile=./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.appinsights.parameters.json
 appInsightsName=$(cat $appInsightsParameterFile | jq -r '.parameters.appInsightsName.value')
-sed -i "s/#appInsightsName#/$appInsightsName/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.appinsights.parameters.json
+sed -i "s/#appInsightsName#/$appInsightsName/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.publisherfunction.parameters.json
 echo "##[endgroup]"
 
 echo "##[group]Upload all ARM templates to the new blob"
