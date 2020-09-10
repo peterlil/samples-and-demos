@@ -112,9 +112,9 @@ for i in ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/
         -f "$i" \
         -c $deploymentContainerName \
         -n $filename \
-        --content-type "application/octet-stream" \
         --account-name $storageAccountName \
         --account-key $storageKey`
+        #--content-type "application/octet-stream" \
     echo "##[debug]$result"
 done
 echo "##[endgroup]"

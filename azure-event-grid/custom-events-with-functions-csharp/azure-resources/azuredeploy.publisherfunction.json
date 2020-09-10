@@ -1,11 +1,55 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
+    "parameters":
+    {
+        "functionAppName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "northeurope"
+        },
+        "functionAppLinuxFxVersion": {
+            "type": "string",
+            "defaultValue": "dotnet|3.1"
+        },
+        "functionAppStorageName": {
+            "type": "string"
+        },
+        "hostingPlanName": {
+            "type": "string"
+        },
+        "hostingPlanKind": {
+            "type": "string",
+            "defaultValue": "linux"
+        },
+        "hostingPlanWorkerSize": {
+            "type": "string",
+            "defaultValue": "0"
+        },
+        "hostingPlanWorkerSizeId": {
+            "type": "string",
+            "defaultValue": "0"
+        },
+        "numberOfWorkers": {
+            "type": "string",
+            "defaultValue": "1"
+        },
+        "hostingPlanSku": {
+            "type": "string",
+            "defaultValue": "Dynamic"
+        },
+        "hostingPlanSkuCode": {
+            "type": "string",
+            "defaultValue": "Y1"
+        }
+    },
     "resources": 
     [
         {
             "apiVersion": "2018-11-01",
-            "name": "[parameters('name')]",
+            "name": "[parameters('functionAppName')]",
             "type": "Microsoft.Web/sites",
             "kind": "functionapp,linux",
             "location": "[parameters('location')]",
@@ -13,10 +57,10 @@
             "dependsOn": [
                 "microsoft.insights/components/event-grid-sample-appinsights",
                 "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('functionAppStorageName'))]"
             ],
             "properties": {
-                "name": "[parameters('name')]",
+                "name": "[parameters('functionAppName')]",
                 "siteConfig": {
                     "appSettings": [
                         {
@@ -37,10 +81,10 @@
                         },
                         {
                             "name": "AzureWebJobsStorage",
-                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('functionAppStorageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('functionAppStorageName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
                         }
                     ],
-                    "linuxFxVersion": "[parameters('linuxFxVersion')]"
+                    "linuxFxVersion": "[parameters('functionAppLinuxFxVersion')]"
                 },
                 "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
                 "clientAffinityEnabled": false
@@ -51,7 +95,7 @@
             "name": "[parameters('hostingPlanName')]",
             "type": "Microsoft.Web/serverfarms",
             "location": "[parameters('location')]",
-            "kind": "linux",
+            "kind": "[parameters('hostingPlanKind')]",
             "tags": {},
             "dependsOn": [],
             "properties": {
@@ -69,7 +113,7 @@
         {
             "apiVersion": "2019-06-01",
             "type": "Microsoft.Storage/storageAccounts",
-            "name": "[parameters('storageAccountName')]",
+            "name": "[parameters('functionAppStorageName')]",
             "location": "[parameters('location')]",
             "tags": {},
             "sku": {
