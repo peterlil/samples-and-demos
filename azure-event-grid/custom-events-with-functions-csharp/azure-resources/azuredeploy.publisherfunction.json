@@ -86,7 +86,7 @@
                     ],
                     "linuxFxVersion": "[parameters('functionAppLinuxFxVersion')]"
                 },
-                "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
                 "clientAffinityEnabled": false
             }
         },
@@ -106,8 +106,8 @@
                 "reserved": true
             },
             "sku": {
-                "Tier": "[parameters('sku')]",
-                "Name": "[parameters('skuCode')]"
+                "Tier": "[parameters('hostingPlanSku')]",
+                "Name": "[parameters('hostingPlanSkuCode')]"
             }
         },
         {
