@@ -79,8 +79,17 @@ sasToken=`az storage container generate-sas -n $deploymentContainerName \
     --as-user`
 
 # Upload all ARM templates by uploading all .json files in the azure-resources folder
-result=`az storage blob upload \
-    -f /path/to/file -c MyContainer -n MyBlob`
+for i in *.json; do
+    [ -f "$i" ] || break
+    echo $i
+    result=`az storage blob upload \
+        -f "./$i" \
+        -c $deploymentContainerName \
+        -n $i \
+        --account-name $storageAccountName \
+        --auth-mode login`
+    echo $result
+done
 
 ################################################################################
 ### Deploy linked templates
@@ -93,14 +102,3 @@ result=`az storage blob upload \
 #  --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.master.parameters.json`
 
 
-for i in *.json; do
-    [ -f "$i" ] || break
-    echo $i
-    result=`az storage blob upload \
-        -f "./$i" \
-        -c $deploymentContainerName \
-        -n $i \
-        --account-name $storageAccountName \
-        --auth-mode login`
-    echo $result
-done
