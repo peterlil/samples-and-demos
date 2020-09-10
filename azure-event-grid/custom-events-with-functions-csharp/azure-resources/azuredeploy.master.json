@@ -7,7 +7,7 @@
 		},
 		"_artifactsLocationSasToken": {
 			"type": "securestring"
-		}
+        }
     },
     "variables": {
         "appInsightsLinkedTemplateFileName": "azuredeploy.appinsights.json",

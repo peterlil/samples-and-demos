@@ -12,6 +12,7 @@
     "hostingPlanWorkerSizeId": { "value": "0" },
     "numberOfWorkers": { "value": "1" },
     "hostingPlanSku": { "value": "Dynamic" },
-    "hostingPlanSkuCode": { "value": "Y1" }
+    "hostingPlanSkuCode": { "value": "Y1" },
+    "appInsightsName": {"value": "#appInsightsName#"}
   }
 }

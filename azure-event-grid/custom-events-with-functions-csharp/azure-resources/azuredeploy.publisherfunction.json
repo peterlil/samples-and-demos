@@ -43,6 +43,9 @@
         "hostingPlanSkuCode": {
             "type": "string",
             "defaultValue": "Y1"
+        },
+        "appInsightsName": {
+            "type": "string"
         }
     },
     "resources": 
