@@ -97,10 +97,18 @@ done
 ### Deploy linked templates
 ################################################################################
 
-#result=`az deployment group create \
-#  --name 'CICD-deployment' \
-#  --resource-group $rgName \
-#  --template-file ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.master.json \
-#  --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.master.parameters.json`
+_artifactsLocation="https://$storageAccountName.blob.core.windows.net/$deploymentContainerName"
 
+result=`az deployment group create \
+  --name 'CICD-deployment' \
+  --resource-group $rgName \
+  --template-uri $_artifactsLocation/azuredeploy.master.json?$sasToken \
+  --parameters _artifactsLocation=$_artifactsLocation _artifactsLocationSasToken=$sasToken`
+
+#EXAMPLE
+#az deployment group create --resource-group testrg --name rollout01 \
+#    --template-file azuredeploy.json  --parameters @params.json \
+#    --parameters https://mysite/params.json --parameters MyValue=This MyArray=@array.json
+
+echo "##[debug]$result"
 

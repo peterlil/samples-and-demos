@@ -10,8 +10,7 @@
 		}
     },
     "variables": {
-		"AutomationDeployTemplateFolder": "Templates",
-		"AutomationDeployTemplateFileName": "AutomationDeploy.json"
+        "appInsightsLinkedTemplateFileName": "azuredeploy.appinsights.json"
 	},
     "resources": 
     [
@@ -23,11 +22,13 @@
 			"properties": {
                 "mode": "Incremental",
                 "templateLink": {
-					"uri": "[concat(parameters('_artifactsLocation'), '/', variables('AutomationDeployTemplateFolder'), '/', variables('AutomationDeployTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
+					"uri": "[concat(parameters('_artifactsLocation'), '/', variables('appInsightsLinkedTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
-					"automationAccountName": { "value": "[parameters('automationAccountName')]" }
+                    "appInsightsName": { "value": "appInsightsName" },
+                    "location": { "value": "northeurope" },
+                    "functionInitiatorName": { "value": "funnyFunction" }
 				}
             }
         }
