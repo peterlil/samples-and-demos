@@ -56,6 +56,8 @@ echo "##[debug]$result"
 # Create a storage container for the deployment resources and a SAS token that's
 # valid for 30 minutes.
 
+echo "##[group]Creating storage container"
+
 storageParameterFile=./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.storagefordeployment.parameters.json
 
 storageAccountName=$(cat $storageParameterFile | jq -r '.parameters.storageAccountName.value')
@@ -64,11 +66,15 @@ timestamp=`date +"%Y%m%d-%H%M%S"`
 deploymentContainerName="deploy-$timestamp"
 
 
-az storage container create \
+result=`az storage container create \
     -n $deploymentContainerName \
     --account-name $storageAccountName \
-    --auth-mode login
+    --auth-mode login`
 
+echo "##[debug]$result"
+echo "##[endgroup]"
+
+echo "##[command]Generating SAS token"
 sasEnd=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
 sasToken=`az storage container generate-sas -n $deploymentContainerName \
     --account-name $storageAccountName \
@@ -78,8 +84,10 @@ sasToken=`az storage container generate-sas -n $deploymentContainerName \
     --auth-mode login \
     --as-user`
 
+echo "##[command]Getting the storage key"
 storageKey=`az storage account keys list --account-name $storageAccountName | jq -r '.[0].value'`
 
+echo "##[group]Upload all ARM templates to the new blob"
 # Upload all ARM templates by uploading all .json files in the azure-resources folder
 for i in ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/*.json; do
     [ -f "$i" ] || break
@@ -90,12 +98,15 @@ for i in ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/
         -n $i \
         --account-name $storageAccountName \
         --account-key $storageKey`
-    echo $result
+    echo "##[debug]$result"
 done
+echo "##[endgroup]"
 
 ################################################################################
 ### Deploy linked templates
 ################################################################################
+
+echo "##[group]Deploying linked templates"
 
 _artifactsLocation="https://$storageAccountName.blob.core.windows.net/$deploymentContainerName"
 
@@ -112,3 +123,4 @@ result=`az deployment group create \
 
 echo "##[debug]$result"
 
+echo "##[endgroup]"
