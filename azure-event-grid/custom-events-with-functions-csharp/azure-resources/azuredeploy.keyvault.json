@@ -65,21 +65,24 @@
   },
     "resources": [
         {
-            "apiVersion": "2015-06-01",
+            "apiVersion": "2019-09-01",
             "name": "[parameters('keyvaultname')]",
             "location": "[resourceGroup().location]",
             "type": "Microsoft.KeyVault/vaults",
-          "properties": {
-            "enabledForDeployment": "[parameters('enabledForDeployment')]",
-            "enabledForTemplateDeployment": "[parameters('enabledForTemplateDeployment')]",
-            "enabledForDiskEncryption": "[parameters('enabledForDiskEncryption')]",
-            "accessPolicies": "[variables('accessPolicies')]",
-            "tenantId": "[subscription().tenantId]",
-            "sku": {
-              "name": "[parameters('sku')]",
-              "family": "A"
+            "properties": {
+              "enabledForDeployment": "[parameters('enabledForDeployment')]",
+              "enabledForTemplateDeployment": "[parameters('enabledForTemplateDeployment')]",
+              "enabledForDiskEncryption": "[parameters('enabledForDiskEncryption')]",
+              "accessPolicies": "[variables('accessPolicies')]",
+              "enablePurgeProtection": true,
+              "enableSoftDelete": true,
+              "softDeleteRetentionInDays": 30,
+              "tenantId": "[subscription().tenantId]",
+              "sku": {
+                "name": "[parameters('sku')]",
+                "family": "A"
+              }
             }
-          }
         }
     ]
 }
