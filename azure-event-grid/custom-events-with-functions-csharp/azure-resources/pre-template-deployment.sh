@@ -78,6 +78,8 @@ sasToken=`az storage container generate-sas -n $deploymentContainerName \
     --auth-mode login \
     --as-user`
 
+storageKey=`az storage account keys list --account-name $storageAccountName | jq -r '.[0].value'`
+
 # Upload all ARM templates by uploading all .json files in the azure-resources folder
 for i in ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/*.json; do
     [ -f "$i" ] || break
@@ -87,7 +89,7 @@ for i in ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/
         -c $deploymentContainerName \
         -n $i \
         --account-name $storageAccountName \
-        --auth-mode login`
+        --account-key $storageKey`
     echo $result
 done
 
