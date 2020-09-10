@@ -5,7 +5,7 @@ rgName=$1
 location=$2
 # Third argument is the name of the Key Vault
 keyVaultName=$3
-# Third argument is the object ID of the service principal creating the Key Vault
+# Fourth argument is the object ID of the service principal creating the Key Vault
 keyVaultOwnerObjectID=$4
 
 ################################################################################
@@ -53,4 +53,39 @@ echo "##[debug]$result"
 ### Prepare for linked deployment templates
 ################################################################################
 
-# Create a deployment container for 
+# Create a storage container for the deployment resources and a SAS token that's
+# valid for 30 minutes.
+
+storageParameterFile=./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.storagefordeployment.parameters.json
+
+storageAccountName=$(cat $storageParameterFile | jq -r '.parameters.storageAccountName.value')
+
+timestamp=`date +"%Y%m%d-%H%M%S"`
+deploymentContainerName="deploy-$timestamp"
+
+
+az storage container create \
+    -n $deploymentContainerName \
+    --account-name $storageAccountName \
+    --auth-mode login
+
+sasEnd=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+sasToken=`az storage container generate-sas -n $deploymentContainerName \
+    --account-name $storageAccountName \
+    --https-only --permissions dlrw \
+    --expiry $sasEnd \
+    -o tsv \
+    --auth-mode login \
+    --as-user`
+
+
+
+################################################################################
+### Deploy linked templates
+################################################################################
+
+#result=`az deployment group create \
+#  --name 'CICD-deployment' \
+#  --resource-group $rgName \
+#  --template-file ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.master.json \
+#  --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.master.parameters.json`
