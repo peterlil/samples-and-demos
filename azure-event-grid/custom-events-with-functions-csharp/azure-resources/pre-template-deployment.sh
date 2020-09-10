@@ -116,6 +116,8 @@ echo "##[group]Deploying linked templates"
 
 _artifactsLocation="https://$storageAccountName.blob.core.windows.net/$deploymentContainerName"
 
+echo "##[debug]$_artifactsLocation/azuredeploy.master.json?$sasToken"
+
 result=`az deployment group create \
   --name 'CICD-deployment' \
   --resource-group $rgName \
