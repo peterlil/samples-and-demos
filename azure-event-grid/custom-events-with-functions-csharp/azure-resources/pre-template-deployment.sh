@@ -29,7 +29,7 @@ sed -i "s/#objectIdOfUser#/$keyVaultOwnerObjectID/" ./azure-event-grid/custom-ev
 #echo "##[debug]$pFile"
 
 result=$(az deployment group create \
-  --name 'CI/CD deployment' \
+  --name 'CICD-deployment' \
   --resource-group $rgName \
   --template-file ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.json \
   --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
