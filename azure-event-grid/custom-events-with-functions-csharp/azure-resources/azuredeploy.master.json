@@ -1,0 +1,36 @@
+﻿{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+		"_artifactsLocation": {
+			"type": "string"
+		},
+		"_artifactsLocationSasToken": {
+			"type": "securestring"
+		}
+    },
+    "variables": {
+		"AutomationDeployTemplateFolder": "Templates",
+		"AutomationDeployTemplateFileName": "AutomationDeploy.json"
+	},
+    "resources": 
+    [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "appInsights-linked",
+            "dependsOn": [],
+			"properties": {
+                "mode": "Incremental",
+                "templateLink": {
+					"uri": "[concat(parameters('_artifactsLocation'), '/', variables('AutomationDeployTemplateFolder'), '/', variables('AutomationDeployTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"automationAccountName": { "value": "[parameters('automationAccountName')]" }
+				}
+
+            }
+        }
+    ]
+}

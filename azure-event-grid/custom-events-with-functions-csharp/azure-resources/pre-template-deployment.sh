@@ -16,6 +16,19 @@ if [ $(az group exists --name $rgName) = false ]; then
 fi
 
 ################################################################################
+### Deploy Storage Account for deployment of resources
+################################################################################
+
+result=$(az deployment group create \
+  --name 'CICD-deployment' \
+  --resource-group $rgName \
+  --template-file ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.storagefordeployment.json \
+  --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.storagefordeployment.parameters.json)
+
+echo "##[debug]$result"
+
+
+################################################################################
 ### Deploy Key Vault
 ################################################################################
 
@@ -35,3 +48,4 @@ result=$(az deployment group create \
   --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
 
 echo "##[debug]$result"
+

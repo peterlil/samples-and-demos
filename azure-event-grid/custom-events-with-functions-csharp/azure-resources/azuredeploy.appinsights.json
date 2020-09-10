@@ -1,0 +1,31 @@
+﻿{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters":{
+        "appInsightsName": {
+            "type": "string"
+        },
+        "location":{
+            "type": "string"
+        },
+        "functionInitiatorName": {
+            "type": "string"
+        }
+    },
+    "resources": 
+    [
+        {
+            "apiVersion": "2015-05-01",
+            "name": "[parameters('appInsightsName')]",
+            "type": "microsoft.insights/components",
+            "location": "[parameters('location')]",
+            "kind": "web",
+            "tags": {},
+            "properties": {
+                "ApplicationId": "[parameters('functionInitiatorName')]",
+                "Request_Source": "rest",
+                "Application_Type": "web"
+            }
+        }
+    ]
+}
