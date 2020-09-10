@@ -48,6 +48,10 @@
             "type": "string"
         }
     },
+    "variables":
+    {
+        "appInsightsReference": "[concat('microsoft.insights/components/', parameters('appInsightsName'))]"
+    },
     "resources": 
     [
         {
@@ -75,11 +79,11 @@
                         },
                         {
                             "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                            "value": "[reference('microsoft.insights/components/event-grid-sample-appinsights', '2015-05-01').InstrumentationKey]"
+                            "value": "[reference(variables('appInsightsReference'), '2015-05-01').InstrumentationKey]"
                         },
                         {
                             "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                            "value": "[reference('microsoft.insights/components/event-grid-sample-appinsights', '2015-05-01').ConnectionString]"
+                            "value": "[reference(variables('appInsightsReference'), '2015-05-01').ConnectionString]"
                         },
                         {
                             "name": "AzureWebJobsStorage",
