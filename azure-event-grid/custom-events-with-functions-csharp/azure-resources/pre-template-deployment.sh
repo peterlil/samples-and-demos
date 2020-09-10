@@ -79,7 +79,7 @@ sasToken=`az storage container generate-sas -n $deploymentContainerName \
     --as-user`
 
 # Upload all ARM templates by uploading all .json files in the azure-resources folder
-for i in *.json; do
+for i in ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/*.json; do
     [ -f "$i" ] || break
     echo $i
     result=`az storage blob upload \
