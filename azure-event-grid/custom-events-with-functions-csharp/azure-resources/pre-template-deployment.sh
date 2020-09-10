@@ -100,7 +100,7 @@ for i in ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/
     [ -f "$i" ] || break
     echo $i
     result=`az storage blob upload \
-        -f "./$i" \
+        -f "./azure-event-grid/custom-events-with-functions-csharp/azure-resources/$i" \
         -c $deploymentContainerName \
         -n $i \
         --account-name $storageAccountName \
