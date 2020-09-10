@@ -96,7 +96,7 @@ echo "##[command]Generating SAS token"
 sasEnd=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
 sasToken=`az storage container generate-sas -n $deploymentContainerName \
     --account-name $storageAccountName \
-    --https-only --permissions dlrw \
+    --https-only --permissions r \
     --expiry $sasEnd \
     -o tsv \
     --auth-mode key \
