@@ -102,8 +102,8 @@
             "dependsOn": [],
             "properties": {
                 "name": "[parameters('hostingPlanName')]",
-                "workerSize": "[parameters('workerSize')]",
-                "workerSizeId": "[parameters('workerSizeId')]",
+                "workerSize": "[parameters('hostingPlanWorkerSize')]",
+                "workerSizeId": "[parameters('hostingPlanWorkerSizeId')]",
                 "numberOfWorkers": "[parameters('numberOfWorkers')]",
                 "reserved": true
             },
