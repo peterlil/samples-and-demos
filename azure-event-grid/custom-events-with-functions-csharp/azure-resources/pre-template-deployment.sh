@@ -19,6 +19,8 @@ fi
 ### Deploy Storage Account for deployment of resources
 ################################################################################
 
+echo "##[group]Creating storage account for deployment"
+
 result=$(az deployment group create \
   --name 'CICD-deployment' \
   --resource-group $rgName \
@@ -27,6 +29,7 @@ result=$(az deployment group create \
 
 echo "##[debug]$result"
 
+echo "##[endgroup]"
 
 ################################################################################
 ### Deploy Key Vault
@@ -34,6 +37,7 @@ echo "##[debug]$result"
 
 # The name of the Key Vault and the ObjectID of the user should not be checked 
 # in to source control, hence they are not in the parameter file.
+echo "##[group]Deploying Key Vault"
 
 sed -i "s/#keyvaultname#/$keyVaultName/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
 sed -i "s/#objectIdOfUser#/$keyVaultOwnerObjectID/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
@@ -48,6 +52,7 @@ result=$(az deployment group create \
   --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
 
 echo "##[debug]$result"
+echo "##[endgroup]"
 
 ################################################################################
 ### Prepare for linked deployment templates
@@ -86,6 +91,8 @@ sasToken=`az storage container generate-sas -n $deploymentContainerName \
 
 echo "##[command]Getting the storage key"
 storageKey=`az storage account keys list --account-name $storageAccountName | jq -r '.[0].value'`
+
+echo "##[debug]$storageKey"
 
 echo "##[group]Upload all ARM templates to the new blob"
 # Upload all ARM templates by uploading all .json files in the azure-resources folder
