@@ -3,7 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters":
     {
-        "functionAppName": {
+        "publisherFunctionAppName": {
+            "type": "string"
+        },
+        "subscriberFunctionAppName": {
             "type": "string"
         },
         "location": {
@@ -56,7 +59,7 @@
     [
         {
             "apiVersion": "2018-11-01",
-            "name": "[parameters('functionAppName')]",
+            "name": "[parameters('publisherFunctionAppName')]",
             "type": "Microsoft.Web/sites",
             "kind": "functionapp,linux",
             "location": "[parameters('location')]",
@@ -66,7 +69,49 @@
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('functionAppStorageName'))]"
             ],
             "properties": {
-                "name": "[parameters('functionAppName')]",
+                "name": "[parameters('publisherFunctionAppName')]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~3"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "dotnet"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(variables('appInsightsReference'), '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value": "[reference(variables('appInsightsReference'), '2015-05-01').ConnectionString]"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('functionAppStorageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('functionAppStorageName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                        }
+                    ],
+                    "linuxFxVersion": "[parameters('functionAppLinuxFxVersion')]"
+                },
+                "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "clientAffinityEnabled": false
+            }
+        },
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('subscriberFunctionAppName')]",
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp,linux",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('functionAppStorageName'))]"
+            ],
+            "properties": {
+                "name": "[parameters('subscriberFunctionAppName')]",
                 "siteConfig": {
                     "appSettings": [
                         {
