@@ -40,7 +40,7 @@ steps:
   inputs:
     azureSubscription: '$(Subscription)'
     appType: functionAppLinux
-    appName: 'EgsPublisher'
+    appName: 'FunctionHost'
     #Uncomment the next lines to deploy to a deployment slot
     #Note that deployment slots is not supported for Linux Dynamic SKU
     #deployToSlotOrASE: true
