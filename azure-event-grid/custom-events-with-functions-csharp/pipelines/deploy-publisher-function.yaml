@@ -1,0 +1,18 @@
+trigger:
+  branches:
+    include: 
+    - EgsPublisher
+    - master
+  paths:
+    include:
+      - azure-event-grid/custom-events-with-functions-csharp/EgsPublisher/*
+
+variables:
+- group: pategs
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    dotnet restore
