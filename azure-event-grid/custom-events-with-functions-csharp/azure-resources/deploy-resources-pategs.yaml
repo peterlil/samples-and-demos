@@ -2,7 +2,13 @@
 # https://aka.ms/yaml
 
 trigger:
-- keyvault
+  branches:
+    include: 
+    - keyvault
+    - master
+  paths:
+    include:
+      - azure-event-grid/custom-events-with-functions-csharp/azure-resources/*
 
 variables:
 - group: pategs
