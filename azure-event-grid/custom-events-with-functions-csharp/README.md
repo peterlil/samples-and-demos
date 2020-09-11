@@ -10,5 +10,5 @@ Start by provisioning the required Azure resources:
 * Azure Storage Account used for the Function Apps
 * App Service Plan for the Function Apps
 * Azure Function (The publisher function)
-
+* Azure Function (The subscriber function)
 
