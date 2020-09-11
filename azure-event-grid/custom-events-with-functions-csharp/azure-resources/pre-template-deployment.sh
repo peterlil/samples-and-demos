@@ -38,7 +38,7 @@ result=$(az deployment group create \
   --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.storagefordeployment.parameters.json)
 
 echo "##[debug]$result"
-if [ `cat "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
     echo "##[error]Failed deploying storage account for deployment"
 fi
 echo "##[endgroup]"
@@ -64,7 +64,7 @@ result=$(az deployment group create \
   --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
 
 echo "##[debug]$result"
-if [ `cat "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
     echo "##[error]Failed deploying Key Vault"
 fi
 echo "##[endgroup]"
@@ -93,7 +93,7 @@ result=`az storage container create \
 
 echo "##[debug]$result"
 
-if [ `cat "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
     echo "##[error]Failed deploying storage container"
 fi
 
@@ -152,7 +152,7 @@ result=`az deployment group create \
 
 echo "##[debug]$result"
 
-if [ `cat "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
     echo "##[error]Failed deploying the linked templates"
 fi
 
