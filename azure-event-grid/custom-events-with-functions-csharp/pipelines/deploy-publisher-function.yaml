@@ -15,4 +15,5 @@ pool:
 
 steps:
 - script: |
+    cd ./azure-event-grid/custom-events-with-functions-csharp/EgsPublisher
     dotnet restore
