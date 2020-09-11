@@ -38,7 +38,9 @@ result=$(az deployment group create \
   --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.storagefordeployment.parameters.json)
 
 echo "##[debug]$result"
-
+if [ `cat "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+    echo "##[error]Failed deploying storage account for deployment"
+fi
 echo "##[endgroup]"
 
 ################################################################################
@@ -62,6 +64,9 @@ result=$(az deployment group create \
   --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
 
 echo "##[debug]$result"
+if [ `cat "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+    echo "##[error]Failed deploying Key Vault"
+fi
 echo "##[endgroup]"
 
 ################################################################################
@@ -87,6 +92,11 @@ result=`az storage container create \
     --auth-mode login`
 
 echo "##[debug]$result"
+
+if [ `cat "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+    echo "##[error]Failed deploying storage container"
+fi
+
 echo "##[endgroup]"
 
 echo "##[command]Getting the storage key"
@@ -140,11 +150,10 @@ result=`az deployment group create \
   --template-uri $_artifactsLocation/azuredeploy.master.json?$sasToken \
   --parameters _artifactsLocation=$_artifactsLocation _artifactsLocationSasToken=$sasToken`
 
-#EXAMPLE
-#az deployment group create --resource-group testrg --name rollout01 \
-#    --template-file azuredeploy.json  --parameters @params.json \
-#    --parameters https://mysite/params.json --parameters MyValue=This MyArray=@array.json
-
 echo "##[debug]$result"
+
+if [ `cat "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+    echo "##[error]Failed deploying the linked templates"
+fi
 
 echo "##[endgroup]"
