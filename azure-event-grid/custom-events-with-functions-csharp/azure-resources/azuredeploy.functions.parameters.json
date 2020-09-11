@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "publisherFunctionAppName": { "value": "EgsPublisher" },
+    "subscriberFunctionAppName": { "value": "EgsSubscriber" },
+    "location": { "value": "northeurope" },
+    "functionAppLinuxFxVersion": { "value": "dotnet|3.1" },
+    "functionAppStorageName": { "value": "egspublisherstorage" },
+    "hostingPlanName": { "value": "egs-plan" },
+    "hostingPlanKind": { "value": "linux" },
+    "hostingPlanWorkerSize": { "value": "0" },
+    "hostingPlanWorkerSizeId": { "value": "0" },
+    "numberOfWorkers": { "value": "1" },
+    "hostingPlanSku": { "value": "Dynamic" },
+    "hostingPlanSkuCode": { "value": "Y1" },
+    "appInsightsName": {"value": "#appInsightsName#"}
+  }
+}

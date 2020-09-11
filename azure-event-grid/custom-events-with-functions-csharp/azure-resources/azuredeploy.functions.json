@@ -1,0 +1,178 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters":
+    {
+        "publisherFunctionAppName": {
+            "type": "string"
+        },
+        "subscriberFunctionAppName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "northeurope"
+        },
+        "functionAppLinuxFxVersion": {
+            "type": "string",
+            "defaultValue": "dotnet|3.1"
+        },
+        "functionAppStorageName": {
+            "type": "string"
+        },
+        "hostingPlanName": {
+            "type": "string"
+        },
+        "hostingPlanKind": {
+            "type": "string",
+            "defaultValue": "linux"
+        },
+        "hostingPlanWorkerSize": {
+            "type": "string",
+            "defaultValue": "0"
+        },
+        "hostingPlanWorkerSizeId": {
+            "type": "string",
+            "defaultValue": "0"
+        },
+        "numberOfWorkers": {
+            "type": "string",
+            "defaultValue": "1"
+        },
+        "hostingPlanSku": {
+            "type": "string",
+            "defaultValue": "Dynamic"
+        },
+        "hostingPlanSkuCode": {
+            "type": "string",
+            "defaultValue": "Y1"
+        },
+        "appInsightsName": {
+            "type": "string"
+        }
+    },
+    "variables":
+    {
+        "appInsightsReference": "[concat('microsoft.insights/components/', parameters('appInsightsName'))]"
+    },
+    "resources": 
+    [
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('publisherFunctionAppName')]",
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp,linux",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('functionAppStorageName'))]"
+            ],
+            "properties": {
+                "name": "[parameters('publisherFunctionAppName')]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~3"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "dotnet"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(variables('appInsightsReference'), '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value": "[reference(variables('appInsightsReference'), '2015-05-01').ConnectionString]"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('functionAppStorageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('functionAppStorageName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                        }
+                    ],
+                    "linuxFxVersion": "[parameters('functionAppLinuxFxVersion')]"
+                },
+                "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "clientAffinityEnabled": false
+            }
+        },
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('subscriberFunctionAppName')]",
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp,linux",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('functionAppStorageName'))]"
+            ],
+            "properties": {
+                "name": "[parameters('subscriberFunctionAppName')]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~3"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "dotnet"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(variables('appInsightsReference'), '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value": "[reference(variables('appInsightsReference'), '2015-05-01').ConnectionString]"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('functionAppStorageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('functionAppStorageName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                        }
+                    ],
+                    "linuxFxVersion": "[parameters('functionAppLinuxFxVersion')]"
+                },
+                "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+                "clientAffinityEnabled": false
+            }
+        },
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('hostingPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('location')]",
+            "kind": "[parameters('hostingPlanKind')]",
+            "tags": {},
+            "dependsOn": [],
+            "properties": {
+                "name": "[parameters('hostingPlanName')]",
+                "workerSize": "[parameters('hostingPlanWorkerSize')]",
+                "workerSizeId": "[parameters('hostingPlanWorkerSizeId')]",
+                "numberOfWorkers": "[parameters('numberOfWorkers')]",
+                "reserved": true
+            },
+            "sku": {
+                "Tier": "[parameters('hostingPlanSku')]",
+                "Name": "[parameters('hostingPlanSkuCode')]"
+            }
+        },
+        {
+            "apiVersion": "2019-06-01",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[parameters('functionAppStorageName')]",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "properties": {
+                "supportsHttpsTrafficOnly": true
+            }
+        }
+    ]
+}
