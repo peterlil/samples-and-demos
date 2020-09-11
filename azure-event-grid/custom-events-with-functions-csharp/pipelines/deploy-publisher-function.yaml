@@ -22,7 +22,7 @@ steps:
   inputs:
     command: publish
     arguments: '--configuration Debug --output publish_output'
-    projects: './azure-event-grid/custom-events-with-functions-csharp/EgsPublisher/*.csproj'
+    projects: './azure-event-grid/custom-events-with-functions-csharp/EgsPublisher/EgsPublisher.csproj'
     publishWebProjects: false
     modifyOutputPath: false
     zipAfterPublish: false
