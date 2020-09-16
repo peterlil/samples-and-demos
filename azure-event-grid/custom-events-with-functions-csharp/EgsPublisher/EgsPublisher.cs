@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace Peterlabs.Samples.Function
 {
+    
     public static class EgsPublisher
     {
         [FunctionName("EgsPublisher")]
@@ -19,8 +20,14 @@ namespace Peterlabs.Samples.Function
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            log.LogTrace("Testing a trace message.");
-
+            
+            log.LogTrace("My own log trace");
+            log.LogDebug("My own log debug");
+            log.LogInformation("My own log message");
+            log.LogWarning("My own log warning");
+            log.LogError("My own log error");
+            log.LogCritical("My own log critical");
+            
             string name = req.Query["name"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
