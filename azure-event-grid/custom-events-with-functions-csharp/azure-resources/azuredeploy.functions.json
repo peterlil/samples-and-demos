@@ -92,7 +92,7 @@
                         },
                         {
                             "name": "EVENTGRID_TOPIC_ENDPOINT",
-                            "value": "[reference('Microsoft.EventGrid/topics/eventGridSampleTopic', '2020-04-01-preview').properties.endpoint]"
+                            "value": "[reference('Microsoft.EventGrid/topics/eventGridSampleTopic', '2020-04-01-preview').endpoint]"
                         }
                     ],
                     "linuxFxVersion": "[parameters('functionAppLinuxFxVersion')]"
