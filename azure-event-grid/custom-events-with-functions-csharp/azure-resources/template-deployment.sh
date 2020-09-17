@@ -167,3 +167,25 @@ if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; 
 fi
 echo "##[endgroup]"
 
+################################################################################
+### Add Key Vault secrets
+################################################################################
+
+# The name of the Key Vault and the ObjectID of the user should not be checked 
+# in to source control, hence they are not in the parameter file.
+echo "##[group]Key Vault secrets"
+
+eventGridTopicParameterFile=./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.event-grid-topic.parameters.json
+eventGridTopicName=$(cat $eventGridTopicParameterFile | jq -r '.parameters.topicName.value')
+
+result=`az eventgrid topic key list -n $eventGridTopicName -g $rgName`
+topicKey=`echo "$result" | jq -r '.key1'`
+
+result=`az keyvault secret set --vault-name $keyVaultName --name TopicKey --value $topicKey`
+
+echo "##[debug]$result"
+#if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+#    echo "##[error]Failed deploying Key Vault"
+#fi
+echo "##[endgroup]"
+
