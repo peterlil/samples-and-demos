@@ -89,6 +89,10 @@
                         {
                             "name": "AzureWebJobsStorage",
                             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('functionAppStorageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('functionAppStorageName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                        },
+                        {
+                            "name": "EVENTGRID_TOPIC_ENDPOINT",
+                            "value": "reference('Microsoft.EventGrid/topics/eventGridSampleTopic', '2020-04-01-preview').properties.endpoint]"
                         }
                     ],
                     "linuxFxVersion": "[parameters('functionAppLinuxFxVersion')]"

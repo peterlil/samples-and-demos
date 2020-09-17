@@ -39,23 +39,6 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "functions-linked",
-            "dependsOn": ["Microsoft.Resources/deployments/appInsights-linked"],
-			"properties": {
-                "mode": "Incremental",
-                "templateLink": {
-					"uri": "[concat(parameters('_artifactsLocation'), '/', variables('functionsLinkedTemplateFileName'), '?', parameters('_artifactsLocationSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parametersLink": {
-                    "uri": "[concat(parameters('_artifactsLocation'), '/', variables('functionsLinkedTemplateParameterFileName'), '?', parameters('_artifactsLocationSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				}
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
             "name": "event-grid-topic-linked",
             "dependsOn": [],
 			"properties": {
@@ -66,6 +49,26 @@
 				},
 				"parametersLink": {
                     "uri": "[concat(parameters('_artifactsLocation'), '/', variables('eventGridTopicLinkedTemplateParameterFileName'), '?', parameters('_artifactsLocationSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				}
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "functions-linked",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/appInsights-linked",
+                "Microsoft.Resources/deployments/event-grid-topic-linked"
+            ],
+			"properties": {
+                "mode": "Incremental",
+                "templateLink": {
+					"uri": "[concat(parameters('_artifactsLocation'), '/', variables('functionsLinkedTemplateFileName'), '?', parameters('_artifactsLocationSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parametersLink": {
+                    "uri": "[concat(parameters('_artifactsLocation'), '/', variables('functionsLinkedTemplateParameterFileName'), '?', parameters('_artifactsLocationSasToken'))]",
 					"contentVersion": "1.0.0.0"
 				}
             }
