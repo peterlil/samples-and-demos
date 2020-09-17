@@ -32,5 +32,5 @@ steps:
     azureSubscription: '$(Subscription)'
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
-    scriptPath: 'azure-event-grid/custom-events-with-functions-csharp/azure-resources/pre-template-deployment.sh'
+    scriptPath: 'azure-event-grid/custom-events-with-functions-csharp/azure-resources/template-deployment.sh'
     arguments: '$(ResourceGroup) $(Location) $(KeyVaultName) $(KeyVaultOwnerObjectID)'

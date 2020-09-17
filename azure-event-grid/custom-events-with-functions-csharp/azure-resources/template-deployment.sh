@@ -44,32 +44,6 @@ fi
 echo "##[endgroup]"
 
 ################################################################################
-### Deploy Key Vault
-################################################################################
-
-# The name of the Key Vault and the ObjectID of the user should not be checked 
-# in to source control, hence they are not in the parameter file.
-echo "##[group]Deploying Key Vault"
-
-sed -i "s/#keyvaultname#/$keyVaultName/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
-sed -i "s/#objectIdOfUser#/$keyVaultOwnerObjectID/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
-
-#pFile=$(cat ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
-#echo "##[debug]$pFile"
-
-result=$(az deployment group create \
-  --name 'CICD-deployment' \
-  --resource-group $rgName \
-  --template-file ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.json \
-  --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
-
-echo "##[debug]$result"
-if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
-    echo "##[error]Failed deploying Key Vault"
-fi
-echo "##[endgroup]"
-
-################################################################################
 ### Prepare for linked deployment templates
 ################################################################################
 
@@ -156,5 +130,40 @@ if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; 
     echo "##[error]Failed deploying the linked templates"
 fi
 
-
 echo "##[endgroup]"
+
+
+################################################################################
+### Deploy Key Vault
+################################################################################
+
+# The name of the Key Vault and the ObjectID of the user should not be checked 
+# in to source control, hence they are not in the parameter file.
+echo "##[group]Deploying Key Vault"
+
+sed -i "s/#keyvaultname#/$keyVaultName/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
+sed -i "s/#objectIdOfUser#/$keyVaultOwnerObjectID/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
+
+functionAppParameterFile=./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.functions.parameters.json
+functionAppName=$(cat $functionAppParameterFile | jq -r '.parameters.functionAppName.value')
+
+result=`az functionapp identity show -n $functionAppName -g $rgName`
+
+functionIdentityObjectId=`echo "$result" | jq -r '.principalId'`
+sed -i "s/#objectIdOfFunctionUser#/$functionIdentityObjectId/" ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json
+
+#pFile=$(cat ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
+#echo "##[debug]$pFile"
+
+result=$(az deployment group create \
+  --name 'CICD-deployment' \
+  --resource-group $rgName \
+  --template-file ./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.json \
+  --parameters @./azure-event-grid/custom-events-with-functions-csharp/azure-resources/azuredeploy.keyvault.parameters.json)
+
+echo "##[debug]$result"
+if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+    echo "##[error]Failed deploying Key Vault"
+fi
+echo "##[endgroup]"
+

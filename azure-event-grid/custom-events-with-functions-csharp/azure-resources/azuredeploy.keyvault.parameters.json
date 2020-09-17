@@ -4,7 +4,8 @@
   "parameters": {
     "keyvaultname": { "value": "pategskv" },
     "sku": { "value": "Standard" },
-    "objectIdOfUser": { "value": "0b34dbd4-be6a-484c-86bd-3a0f6b6df8d6" },
+    "objectIdOfOwner": { "value": "0b34dbd4-be6a-484c-86bd-3a0f6b6df8d6" },
+    "objectIdOfFunctionUser": { "value": "#objectIdOfFunctionUser#" },
     "enabledForDeployment": { "value": true },
     "enabledForTemplateDeployment": { "value": true },
     "enabledForDiskEncryption": { "value": true }

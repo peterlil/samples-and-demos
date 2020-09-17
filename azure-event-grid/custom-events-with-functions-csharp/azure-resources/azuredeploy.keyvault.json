@@ -18,7 +18,13 @@
         "description": "SKU for the vault"
       }
     },
-    "objectIdOfUser": {
+    "objectIdOfOwner": {
+      "type": "string",
+      "metadata": {
+        "description": "Object ID of the user who should become KeyVault manager."
+      }
+    },
+    "objectIdOfFunctionUser": {
       "type": "string",
       "metadata": {
         "description": "Object ID of the user who should become KeyVault manager."
@@ -40,7 +46,7 @@
   "variables": {
     "accessPolicies": [
       {
-        "objectId": "[parameters('objectIdOfUser')]",
+        "objectId": "[parameters('objectIdOfOwner')]",
         "tenantId": "[subscription().tenantId]",
         "permissions": {
           "keys": [
@@ -60,8 +66,19 @@
             "All"
           ]
         }
+      },
+      {
+        "objectId": "[parameters('objectIdOfFunctionUser')]",
+        "tenantId": "[subscription().tenantId]",
+        "permissions": {
+          "keys": [],
+          "secrets": [
+            "Get"
+          ],
+          "certificates": []
+        }
       }
-      ]
+    ]
   },
   "resources": [
       {
