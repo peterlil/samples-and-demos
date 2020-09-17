@@ -93,7 +93,7 @@ result=`az storage container create \
 
 echo "##[debug]$result"
 
-if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; then
+if [ `echo "$result" | jq -r '.created'` != 'true' ]; then
     echo "##[error]Failed deploying storage container"
 fi
 

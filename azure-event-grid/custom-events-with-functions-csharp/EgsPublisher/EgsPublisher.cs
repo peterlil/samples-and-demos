@@ -8,6 +8,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
+
+using Microsoft.Azure.EventGrid.Models;
+
+// NuGet required: https://www.nuget.org/packages/Microsoft.Azure.EventGrid/
+// dotnet add package Microsoft.Azure.EventGrid --version 3.2.0
+
 namespace Peterlabs.Samples.Function
 {
     
@@ -18,25 +24,23 @@ namespace Peterlabs.Samples.Function
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
+            log.LogInformation("C# HTTP trigger function is preparing a custom Event Grid event.");
             
-            log.LogTrace("My own log trace");
-            log.LogDebug("My own log debug");
-            log.LogInformation("My own log message");
-            log.LogWarning("My own log warning");
-            log.LogError("My own log error");
-            log.LogCritical("My own log critical");
-            
-            string name = req.Query["name"];
+            string traceId = Guid.NewGuid().ToString();
+            var testEvent = new EventGridEvent()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Subject = "My custom event",
+                EventType = "my-customer-event-type",
+                EventTime = DateTime.UtcNow,
+                Data = traceId,
+                DataVersion = "1.0"
+            };
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            
+            string responseMessage = "";
 
             return new OkObjectResult(responseMessage);
         }
