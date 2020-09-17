@@ -25,7 +25,9 @@
                 "publicNetworkAccess": "Enabled",
                 "inboundIpRules": []
             },
-            "sku": "Basic"
+            "sku": {
+                "name": "Basic"
+            }
         }
     ]
 }
