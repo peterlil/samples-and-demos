@@ -156,4 +156,5 @@ if [ `echo "$result" | jq -r '.properties.provisioningState'` != 'Succeeded' ]; 
     echo "##[error]Failed deploying the linked templates"
 fi
 
+
 echo "##[endgroup]"
