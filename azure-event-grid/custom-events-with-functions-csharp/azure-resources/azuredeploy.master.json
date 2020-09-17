@@ -13,7 +13,9 @@
         "appInsightsLinkedTemplateFileName": "azuredeploy.appinsights.json",
         "appInsightsLinkedTemplateParameterFileName": "azuredeploy.appinsights.parameters.json",
         "functionsLinkedTemplateFileName": "azuredeploy.functions.json",
-        "functionsLinkedTemplateParameterFileName": "azuredeploy.functions.parameters.json"
+        "functionsLinkedTemplateParameterFileName": "azuredeploy.functions.parameters.json",
+        "eventGridTopicLinkedTemplateFileName": "azuredeploy.event-grid-topic.json",
+        "eventGridTopicLinkedTemplateParameterFileName": "azuredeploy.event-grid-topic.parameters.json"
 	},
     "resources": 
     [
@@ -47,6 +49,23 @@
 				},
 				"parametersLink": {
                     "uri": "[concat(parameters('_artifactsLocation'), '/', variables('functionsLinkedTemplateParameterFileName'), '?', parameters('_artifactsLocationSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				}
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "event-grid-topic-linked",
+            "dependsOn": [],
+			"properties": {
+                "mode": "Incremental",
+                "templateLink": {
+					"uri": "[concat(parameters('_artifactsLocation'), '/', variables('eventGridTopicLinkedTemplateFileName'), '?', parameters('_artifactsLocationSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parametersLink": {
+                    "uri": "[concat(parameters('_artifactsLocation'), '/', variables('eventGridTopicLinkedTemplateParameterFileName'), '?', parameters('_artifactsLocationSasToken'))]",
 					"contentVersion": "1.0.0.0"
 				}
             }
