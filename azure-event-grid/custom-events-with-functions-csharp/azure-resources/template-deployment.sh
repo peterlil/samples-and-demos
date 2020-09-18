@@ -17,14 +17,6 @@ if [ $noAzLocations -le 5 ]; then
     az login
 fi
 
-
-################################################################################
-### Create the resource group
-################################################################################
-if [ $(az group exists --name $rgName) = false ]; then
-    az group create --name $rgName --location $location
-fi
-
 ################################################################################
 ### Deploy Storage Account for deployment of resources
 ################################################################################
