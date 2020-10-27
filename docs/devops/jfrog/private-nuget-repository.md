@@ -21,15 +21,23 @@ The article is using `blueish1` as an example.
 You will get an e-mail sent to the address you entered in the form. Make sure to click on the link for activating yor subscription in the e-mail.
 
 #### 4. Create a repository
-While still using Chrome, browse to `https://blueish1.jfrog.com` (replace `blueish1` with the name of your subscription) and log in with the credentials you created in step 2. 
+While still using Chrome, browse to `https://blueish1.jfrog.io` (replace `blueish1` with the name of your subscription) and log in with the credentials you created in step 2. 
 
-When you are logged in, click the *Create a Repository* button as shown below.
+When you are logged in, click the *Create a Repository* button as shown below. 
 ![The welcome to the JFrog Platform page is shown with a button for creating a repository.](./../../../img/jfrog/jfrog3.jpg)
 
+Then select *Create Local Repository*.
+![A page showing the options of creating a local repository, a remote repository or a virtual repository.](./../../../img/jfrog/jfrog4.jpg)
+
+Continue by selecting the *NuGet* ikon to create a NuGet package repository.
+![A page showing ikons for al supported repositories, 26 of them.](./../../../img/jfrog/jfrog5.jpg)
+
+Now fill in the *Repository Key*, which essentially is the name of your repository, and check the *Force Authentication* checkbox so no anonymous connections can be made.
+Nothing else needs to be filled in, so continue by clicking on *Save & Finish*.
+![A page showing the New Repository form.](./../../../img/jfrog/jfrog6.jpg)
+
 #### 5. 
-![.](./../../../img/jfrog/jfrog4.jpg)
-![.](./../../../img/jfrog/jfrog5.jpg)
-![.](./../../../img/jfrog/jfrog6.jpg)
+
 ![.](./../../../img/jfrog/jfrog7.jpg)
 
 
