@@ -48,19 +48,19 @@ By default, you get a *readers* group, which all users are assigned to by defaul
 
 Since we want to keep control and only give reading access to the NuGet repository to our users, we should stop new users from auto-joining the *readers* group and instead join a new group that we create, that only has read access to the NuGet Repository.
 
-##### 6.1 Stop new users to auto-join the Reader group
+##### 6.1. Stop new users to auto-join the Reader group
 Go to Administration->Groups and click *readers*. 
 ![Page showing how to navigate to the group readers in three clicks.](./../../../img/jfrog/jfrog9.jpg)
 In the *readers* group settings, uncheck the box named *Automatically Join New Users to this Group* and click *Save*.
 ![Showing a checkbox.](./../../../img/jfrog/jfrog10.jpg)
 
-##### 6.2 Create a new group
+##### 6.2. Create a new group
 Still on the page listing groups, click on *New Group*.
 ![Showing the group list and there is a new group button.](./../../../img/jfrog/jfrog11.jpg)
 In the *New Group* page, enter a name for the group, check the box for the automatical joining of new user and click *Save*.
 ![New group dialog.](./../../../img/jfrog/jfrog12.jpg)
 
-##### 6.3 Create a new permission
+##### 6.3. Create a new permission
 Click on *Permissions* in the left *Administration* menu to get to the *Permission* page. There click *New Permission*.
 ![New permission page.](./../../../img/jfrog/jfrog13.jpg)
 
@@ -75,3 +75,46 @@ When on the *Groups* page, click the green plus sign next to the *Selected Group
 
 Check the *Read* checkbox for *Repositories* and then click *Create*.
 ![Page for setting permissions.](./../../../img/jfrog/jfrog16.jpg)
+
+##### 7. Uploading NuGet packages
+Alright, it's time to put the repository to the test and we should start by uploading a package. 
+To do this, switch over from the *Administration* menu to the *Application* menu.
+![Menu switch.](./../../../img/jfrog/jfrog17.jpg)
+Click on *Artifactory* and *Artifacts*.
+Then you should get to a view like the image below, where you should click *Set Me Up*.
+![Artifactory view.](./../../../img/jfrog/jfrog18.jpg)
+Here you have all the information you need to upload packages to the repository and if you fill in the password at the top, it's as easy as copying and pasting the rest. You can safely ignore the V3 instructions.
+For a Visual Studio project, I navigated to the project folder and ran this command: 
+`nuget sources Add -Name Artifactory -Source https://blueish1.jfrog.io/artifactory/api/nuget/MyRepo -username <my username> -password <my password>`
+The output was:
+`Package source with Name: Artifactory added successfully.`
+
+Then, to authenticate against Artifactory with the NuGet API key, I ran the following command:
+`nuget setapikey <my username>:<my password> -Source Artifactory`
+The output was:
+`The API Key '<my username>:<my password>' was saved for 'https://blueish1.jfrog.io/artifactory/api/nuget/MyRepo'.`
+
+Finally, I could push my package to the NuGet repository using this command:
+`nuget push bin\Debug\MyVsLibrary.1.0.1.nupkg -Source Artifactory`
+The output was:
+```
+Pushing MyVsLibrary.1.0.1.nupkg to 'https://blueish1.jfrog.io/artifactory/api/nuget/MyRepo'...
+  PUT https://blueish1.jfrog.io/artifactory/api/nuget/MyRepo/
+  Created https://blueish1.jfrog.io/artifactory/api/nuget/MyRepo/ 1793ms
+Your package was pushed.
+```
+
+###### 8. Testing anonynmous access
+If we have configured everything correctly, we should not be able to access the NuGet feed without being prompted for credentials. Let's have a go and fire up Visual Studio and open any solution we might have, it does not matter which one. I select *Tools->NuGet Package Manager->Package Manager Settings*. In the dialog I enter the following:
+Name: Artifactory
+Source: `https://blueish1.jfrog.io/artifactory/api/nuget/MyRepo`
+I got the source from the Artifactory view that opened up when I clicked on the *Set Me Up* button above.
+Then I clicked *Update* and *OK*.
+![Visual Studio 2019 Package Manager Settings.](./../../../img/jfrog/jfrog19.jpg)
+Then I click to manage the projects NuGet packages and select the Artifactory repo as *Package source*. 
+And there it is! I get immediately prompted for a username and password. 
+![Visual Studio 2019 password prompt.](./../../../img/jfrog/jfrog20.jpg)
+
+So I quickly went over to https://blueish1.jgrog.io and created a user account, entered username, e-mail and password to see if this new user would get access. 
+And when entering the username and password in the credential dialog, I get access to the NuGet feed.
+![The packages as visible in the Package Manager in Visual Studio.](./../../../img/jfrog/jfrog21.jpg)
