@@ -3,11 +3,14 @@
 This article will show you a simple way of securely setting up a private NuGet feed over the Internet and at the time of writing, at no cost. 
 First of all, use Google Chrome are even the new Chromium Edge is not supported with JFrog.
 
-# Create the subscription
+#### 1. Create the subscription
 
 Start by signing up for a [free cloud subscription at JFrog](https://jfrog.com/) using Google Chrome.
 
+Click on the red circled button below to create a free cloud subscription.
 ![Start page of JFrog with an option to create a free cloud subscription.](./../../../img/jfrog/jfrog1.jpg)
+
+#### 2. Fill in the details. 
 ![.](./../../../img/jfrog/jfrog2.jpg)
 ![.](./../../../img/jfrog/jfrog3.jpg)
 ![.](./../../../img/jfrog/jfrog4.jpg)
