@@ -2,10 +2,11 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "functionAppName": { "value": "FunctionHost" },
+    "publisherFunctionAppName": { "value": "EgsPublisher" },
+    "subscriberFunctionAppName": { "value": "EgsSubscriber" },
     "location": { "value": "northeurope" },
     "functionAppLinuxFxVersion": { "value": "dotnet|3.1" },
-    "functionAppStorageName": { "value": "egsfunctionhoststorage" },
+    "functionAppStorageName": { "value": "egspublisherstorage" },
     "hostingPlanName": { "value": "egs-plan" },
     "hostingPlanKind": { "value": "linux" },
     "hostingPlanWorkerSize": { "value": "0" },

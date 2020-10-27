@@ -6,10 +6,6 @@
             "samplingSettings": {
                 "isEnabled": true
             }
-        },
-        "logLevel": {
-            "default":"Information",
-            "Function.EgsPublisher.User": "Trace"
         }
     }
 }
