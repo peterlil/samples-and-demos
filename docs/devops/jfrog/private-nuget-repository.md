@@ -57,12 +57,21 @@ In the *readers* group settings, uncheck the box named *Automatically Join New U
 ##### 6.2 Create a new group
 Still on the page listing groups, click on *New Group*.
 ![Showing the group list and there is a new group button.](./../../../img/jfrog/jfrog11.jpg)
+In the *New Group* page, enter a name for the group, check the box for the automatical joining of new user and click *Save*.
+![New group dialog.](./../../../img/jfrog/jfrog12.jpg)
 
+##### 6.3 Create a new permission
+Click on *Permissions* in the left *Administration* menu to get to the *Permission* page. There click *New Permission*.
+![New permission page.](./../../../img/jfrog/jfrog13.jpg)
 
+Type a name for the permission and then click the big plus sign to add a repository. In the new popup dialog, and select your repository, click the green arrow as by the image and the click *Save*.
+![Page showing repositories to add.](./../../../img/jfrog/jfrog14.jpg)
 
-# Remove default permissions
+Now you should see one repository selected on the *Create Permission* page and nothing in the *Builds* or *Pipelines* area of the page. 
+Click *Groups*.
 
-Default permissions are:
+When on the *Groups* page, click the green plus sign next to the *Selected Groups* label. In the new dialog that shows, select your newly created group, add it to the list by clicking on the green arrow, then click *OK*.
+![Page for selecting groups.](./../../../img/jfrog/jfrog15.jpg)
 
-
-
+Check the *Read* checkbox for *Repositories* and then click *Create*.
+![Page for setting permissions.](./../../../img/jfrog/jfrog16.jpg)
