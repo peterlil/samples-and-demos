@@ -34,7 +34,7 @@ Continue by selecting the *NuGet* ikon to create a NuGet package repository.
 
 Now fill in the *Repository Key*, which essentially is the name of your repository, and check the *Force Authentication* checkbox so no anonymous connections can be made.
 Nothing else needs to be filled in, so continue by clicking on *Save & Finish*.
-![A page showing the New Repository form.](./../../../img/jfrog/jfrog6.jpg)
+![A page showing the New Repository form.](./../../../img/jfrog/jfrog6-01.jpg)
 
 #### 5. 
 
