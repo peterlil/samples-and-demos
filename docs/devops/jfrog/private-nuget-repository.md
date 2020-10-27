@@ -8,6 +8,13 @@ First of all, use Google Chrome are even the new Chromium Edge is not supported 
 Start by signing up for a [free cloud subscription at JFrog](https://jfrog.com/) using Google Chrome.
 
 ![Start page of JFrog with an option to create a free cloud subscription.](./../../../img/jfrog/jfrog1.jpg)
+![.](./../../../img/jfrog/jfrog2.jpg)
+![.](./../../../img/jfrog/jfrog3.jpg)
+![.](./../../../img/jfrog/jfrog4.jpg)
+![.](./../../../img/jfrog/jfrog5.jpg)
+![.](./../../../img/jfrog/jfrog6.jpg)
+![.](./../../../img/jfrog/jfrog7.jpg)
+
 
 
 
