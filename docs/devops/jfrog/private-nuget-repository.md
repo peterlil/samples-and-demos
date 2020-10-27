@@ -36,26 +36,29 @@ Now fill in the *Repository Key*, which essentially is the name of your reposito
 Nothing else needs to be filled in, so continue by clicking on *Save & Finish*.
 ![A page showing the New Repository form.](./../../../img/jfrog/jfrog6-01.jpg)
 
-#### 5. 
+When the repository is created, just click on the X to close the message window.
+![A confirmation message window.](./../../../img/jfrog/jfrog7.jpg)
 
-![.](./../../../img/jfrog/jfrog7.jpg)
+#### 5. Delete default repos
+Hover over the repositories and remove the ones that was created by default (*example-repo-local* and *jfrogpipelines*).
+![Showing the list of repositories.](./../../../img/jfrog/jfrog8.jpg)
+
+#### 6. Permissions
+By default, you get a *readers* group, which all users are assigned to by default when they are created. The *readers* group has by default read access to repositories, builds and pipelines. 
+
+Since we want to keep control and only give reading access to the NuGet repository to our users, we should stop new users from auto-joining the *readers* group and instead join a new group that we create, that only has read access to the NuGet Repository.
+
+##### 6.1 Stop new users to auto-join the Reader group
+Go to Administration->Groups and click *readers*. 
+![Page showing how to navigate to the group readers in three clicks.](./../../../img/jfrog/jfrog9.jpg)
+In the *readers* group settings, uncheck the box named *Automatically Join New Users to this Group* and click *Save*.
+![Showing a checkbox.](./../../../img/jfrog/jfrog10.jpg)
+
+##### 6.2 Create a new group
+Still on the page listing groups, click on *New Group*.
+![Showing the group list and there is a new group button.](./../../../img/jfrog/jfrog11.jpg)
 
 
-
-
-and make sure to select to host it in Azure.
-
-Activate by the e-mail sent
-
-Log in (still in Chrome)
-
-# Delete default repos
-Sign in to your subscription (https://<your subscription name>.jfrog.io) and navigate to Administration->Repositories. 
-Hover over the repositories and remove the ones that was created by default.
-
-# Add a new local repository
-Create a new local repository and select package type NuGet when you are prompted.
-When entering 'Repository Key' you should enter the name of your repository. It could be confusing that they are calling it key, when they actually mean name.
 
 # Remove default permissions
 
