@@ -1,0 +1,48 @@
+trigger:
+  branches:
+    include: 
+    - EgsPublisher
+    - master
+  paths:
+    include:
+      - azure-event-grid/custom-events-with-functions-csharp/EgsPublisher/*
+
+variables:
+- group: pategs
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    dotnet restore ./azure-event-grid/custom-events-with-functions-csharp/EgsPublisher/EgsPublisher.csproj
+    dotnet build ./azure-event-grid/custom-events-with-functions-csharp/EgsPublisher/EgsPublisher.csproj --configuration Debug
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    arguments: '--configuration Debug --output publish_output'
+    projects: './azure-event-grid/custom-events-with-functions-csharp/EgsPublisher/EgsPublisher.csproj'
+    publishWebProjects: false
+    modifyOutputPath: false
+    zipAfterPublish: false
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: "$(System.DefaultWorkingDirectory)/publish_output"
+    includeRootFolder: false
+    archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip'
+    artifactName: 'drop'
+- task: AzureFunctionApp@1
+  inputs:
+    azureSubscription: '$(Subscription)'
+    appType: functionAppLinux
+    appName: 'FunctionHost'
+    #Uncomment the next lines to deploy to a deployment slot
+    #Note that deployment slots is not supported for Linux Dynamic SKU
+    #deployToSlotOrASE: true
+    #resourceGroupName: '<Resource Group Name>'
+    #slotName: '<Slot name>'

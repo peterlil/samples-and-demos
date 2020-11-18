@@ -1,0 +1,16 @@
+﻿name: cd-azure-resources
+on: 
+  push: 
+    paths:
+    - azure-event-grid/custom-events-with-functions-csharp/azure-resources/*
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: pwd
+      - run: ls -R
+      #- run: echo $(ResourceGroup)
+      #- run: echo $(Location)
+      #- run: echo $(jq --version)
+      

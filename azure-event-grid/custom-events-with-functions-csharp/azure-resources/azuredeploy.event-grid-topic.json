@@ -1,0 +1,33 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters":
+    {
+        "topicName": {
+            "type": "string",
+            "defaultValue": "customTopic"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "northeurope"
+        }
+    },
+    "resources": 
+    [
+        {
+            "apiVersion": "2020-04-01-preview",
+            "name": "[parameters('topicName')]",
+            "type": "Microsoft.EventGrid/topics",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "dependsOn": [],
+            "properties": {
+                "publicNetworkAccess": "Enabled",
+                "inboundIpRules": []
+            },
+            "sku": {
+                "name": "Basic"
+            }
+        }
+    ]
+}
