@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aadb2b-simple-webapp", "aadb2b-simple-webapp.csproj", "{9B684C03-9D18-4D8D-A5A5-3168C6CDF162}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B684C03-9D18-4D8D-A5A5-3168C6CDF162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B684C03-9D18-4D8D-A5A5-3168C6CDF162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B684C03-9D18-4D8D-A5A5-3168C6CDF162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B684C03-9D18-4D8D-A5A5-3168C6CDF162}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18502969-0344-4030-8E64-B918D8F8AC55}
+	EndGlobalSection
+EndGlobal
