@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    -name: Log location
+    - name: Log location
      run: |
        pwd
 #    - uses: actions/checkout@v2
