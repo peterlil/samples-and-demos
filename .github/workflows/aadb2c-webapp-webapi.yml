@@ -17,13 +17,18 @@ jobs:
     
     # Check out code
     - uses: actions/checkout@v2
+    
+    # Set up .net core.
     - name: Setup .NET Core
-
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.100
+    
+    # Install the dependencies
     - name: Install dependencies
       run: dotnet restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
+
+    # Build the solution
     - name: Build
       run: dotnet build --configuration Release --no-restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
 #    - name: Test
