@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-aadb2c_simple_webapp_code-59D308A4-C23F-4B46-BFC7-51C0C2C0B41F</UserSecretsId>
+    <RootNamespace>aadb2c_simple_webapp_code</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="3.1.8" />
+  </ItemGroup>
+
+</Project>

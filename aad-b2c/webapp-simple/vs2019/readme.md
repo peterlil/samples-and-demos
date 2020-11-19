@@ -36,7 +36,7 @@ Test it locally.
 Test by publishing to Azure App Service (Linux):
 - Create App Service Plan
 - Create Web App
-- Puslish
+- Publish
 
 
 Conclusions:
