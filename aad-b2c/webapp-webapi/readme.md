@@ -1,4 +1,4 @@
-﻿# Step by step
+﻿# Step by step for Visual Studio Code
 
 ### 1. Configure AAD B2C
 #### 1.1 Make an app registration for the simple webapp
@@ -18,8 +18,8 @@ TBD: Create Signup and sign in user flow
 
 TBD: Create a user
 
-### 2. Create a Visual Studio Code project
-Create a new .NET Core web project with ```dotnet new webapp -n aadb2c-simple-webapp-code -au IndividualB2C --aad-b2c-instance https://peterlilb2c.b2clogin.com/tfp/ --susi-policy-id B2C_1_susi -rp B2C_1_SSPR -ep B2C_1_SiPe --client-id 42e92133-c635-4bca-92d0-120e43735a81 --domain peterlilb2c.onmicrosoft.com -f netcoreapp3.1```
+### 2. Create a vscode webapp project
+Create a new .NET Core web project with ```dotnet new webapp -n aadb2c-webapp-webapi -o ./code/webapp -au IndividualB2C --aad-b2c-instance https://peterlilb2c.b2clogin.com/tfp/ --susi-policy-id B2C_1_susi -rp B2C_1_SSPR -ep B2C_1_SiPe --client-id 42e92133-c635-4bca-92d0-120e43735a81 --domain peterlilb2c.onmicrosoft.com -f net5.0```
 
 
 Test it locally.
