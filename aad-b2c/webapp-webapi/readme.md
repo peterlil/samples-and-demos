@@ -31,6 +31,7 @@ Test by publishing to Azure App Service (Linux):
 #### Use the Azure login Action
 
 Create a service principal for the repo.
+
     $name = 'http://[yourappname]'
     $role = 'contributor'
     $scope = '/subscriptions/[id]/resourceGroups/[rg]/'
