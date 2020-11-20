@@ -9,6 +9,7 @@ on:
 env:
   AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   AZURE_RESOURCE_GROUP: samples-and-demos
+  AZURE_REGION: northeurope
 
 jobs:
   build:
@@ -41,7 +42,8 @@ jobs:
       with: 
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Deploy ARM Template
+    # Deploy the App Service infrastructure
+    - name: Deploy the App Service infrastructure
       uses: azure/arm-deploy@v1
       with:
         scope: subscription
@@ -49,3 +51,4 @@ jobs:
         resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
         template: $GITHUB_WORKSPACE/aad-b2c/webapp-webapi/azuredeploy.json
         parameters: $GITHUB_WORKSPACE/aad-b2c/webapp-webapi/azuredeploy-parameters.json
+        region: ${{ env.AZURE_REGION }}
