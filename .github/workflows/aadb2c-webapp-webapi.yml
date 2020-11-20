@@ -43,12 +43,22 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Deploy the App Service infrastructure
+#    - name: Deploy the App Service infrastructure
+#      uses: azure/arm-deploy@v1
+#      with:
+#        scope: resourcegroup
+#        subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
+#        resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
+#        template: aad-b2c/webapp-webapi/azuredeploy-app-service-plan-linux.json
+#        parameters: aad-b2c/webapp-webapi/azuredeploy-app-service-plan-linux-parameters.json
+#        region: ${{ env.AZURE_REGION }}
+
     - name: Deploy the App Service infrastructure
       uses: azure/arm-deploy@v1
       with:
         scope: resourcegroup
         subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
-        template: aad-b2c/webapp-webapi/azuredeploy-app-service-plan-linux.json
-        parameters: aad-b2c/webapp-webapi/azuredeploy-app-service-plan-linux-parameters.json
+        template: aad-b2c/webapp-webapi/azuredeploy-webapp.json
+        parameters: aad-b2c/webapp-webapi/azuredeploy-webapp-parameters.json
         region: ${{ env.AZURE_REGION }}
