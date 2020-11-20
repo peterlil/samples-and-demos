@@ -35,7 +35,9 @@ jobs:
 
     # Build the solution
     - name: Build
-      run: dotnet build --configuration Release --no-restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
+      run: |
+        dotnet build --configuration Release --no-restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj -o
+        dotnet publish - Release -o ./aad-b2c/webapp-webapi/code/webapp/drop
 
     # Log in to Azure
     - uses: azure/login@v1
@@ -59,6 +61,7 @@ jobs:
       with:
         app-name: webapp-apifront
         publish-profile: ${{ secrets.WEBAPP_PUBLISH_PROFILE }}
+        package: ./aad-b2c/webapp-webapi/code/webapp/drop
 
 
       
