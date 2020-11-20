@@ -32,6 +32,9 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
 
+    # Log in to Azure
+    - uses: azure/login@v1
+      with: 
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-
-
+    - run: az webapp list --query "[?state=='Running']"
