@@ -47,7 +47,7 @@
             "type": "Microsoft.Web/sites",
             "location": "[parameters('location')]",
             "tags": {},
-            "dependsOn": ["resourceId('Microsoft.Resources/deployments', 'app-service-plan-template')"],
+            "dependsOn": ["[resourceId('Microsoft.Resources/deployments', 'app-service-plan-template')]"],
             "properties": {
                 "name": "[parameters('name')]",
                 "siteConfig": {
