@@ -1,0 +1,27 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "value": "05c25b78-003c-49ef-8f02-b24ca4aca086"
+        },
+        "name": {
+            "value": "webapp-apifront"
+        },
+        "location": {
+            "value": "North Europe"
+        },
+        "hostingPlanName": {
+            "value": "free-linux-plan"
+        },
+        "serverFarmResourceGroup": {
+            "value": "samples-and-demos"
+        },
+        "alwaysOn": {
+            "value": false
+        },
+        "linuxFxVersion": {
+            "value": "DOTNETCORE|5.0"
+        }
+    }
+}

@@ -49,6 +49,6 @@ jobs:
         scope: resourcegroup
         subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
-        template: aad-b2c/webapp-webapi/azuredeploy.json
-        parameters: aad-b2c/webapp-webapi/azuredeploy-parameters.json
+        template: aad-b2c/webapp-webapi/azuredeploy-app-service-plan-linux.json
+        parameters: aad-b2c/webapp-webapi/azuredeploy-app-service-plan-linux-parameters.json
         region: ${{ env.AZURE_REGION }}
