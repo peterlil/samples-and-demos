@@ -36,7 +36,7 @@ jobs:
     # Build the solution
     - name: Build
       run: |
-        dotnet build --configuration Release --no-restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj -o
+        dotnet build --configuration Release --no-restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
         dotnet publish - Release -o ./aad-b2c/webapp-webapi/code/webapp/drop
 
     # Log in to Azure
