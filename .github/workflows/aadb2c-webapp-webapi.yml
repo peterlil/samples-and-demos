@@ -30,15 +30,15 @@ jobs:
         dotnet-version: 5.0.100
     
     # Install the dependencies
-    - name: Install dependencies
-      run: dotnet restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
+    #- name: Install dependencies
+    #  run: dotnet restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
 
     # Build the solution
     - name: Build
       run: |
-        dotnet build --configuration Release --no-restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
-        dotnet publish -c Release -o ./aad-b2c/webapp-webapi/code/webapp/drop
-
+        dotnet publish ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj --configuration Release -v -o ./aad-b2c/webapp-webapi/code/webapp/drop
+        
+    #dotnet build --configuration Release --no-restore -v ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
     # Log in to Azure
     - uses: azure/login@v1
       with: 
