@@ -11,7 +11,7 @@
         "sku": {
             "type": "string"
         },
-        "skucode": {
+        "skuCode": {
             "type": "string"
         },
         "workerSize": {
