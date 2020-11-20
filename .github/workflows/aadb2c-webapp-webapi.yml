@@ -31,8 +31,7 @@ jobs:
     # Build the solution
     - name: Build
       run: dotnet build --configuration Release --no-restore ./aad-b2c/webapp-webapi/code/webapp/aadb2c-webapp-webapi.csproj
-#    - name: Test
-#      run: dotnet test --no-restore --verbosity normal
+
 
 
 
