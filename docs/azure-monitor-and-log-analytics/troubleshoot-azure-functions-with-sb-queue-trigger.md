@@ -62,3 +62,26 @@ Same with relative time.
     | order by TimeGenerated asc
     | limit rowsLimit
 
+This query checks if the azure function is currently running or stopped, as well as returns the latest sign of life/sleep.
+
+    let dtStart = ago(72h);
+    let sResource = "/<name of your azure function in capitals>"; // Ex "/AFTEST"
+    AzureMetrics 
+    | where TimeGenerated > dtStart
+    | where Total > 0
+    | where _ResourceId contains sResource
+    | where MetricName == "MemoryWorkingSet"
+    | order by TimeGenerated desc
+    | limit 1
+    | project LatestAwakeLog=TimeGenerated, LatestAwakeLogAgo=(now()-TimeGenerated), _ResourceId
+    | join (AzureMetrics 
+        | where TimeGenerated > dtStart
+        | where Total == 0.0
+        | where _ResourceId contains sResource
+        | where MetricName == "MemoryWorkingSet"
+        | order by TimeGenerated desc
+        | limit 1
+        | project LatestSleepLog= TimeGenerated, LatestSleepLogAgo=(now()-TimeGenerated), _ResourceId)
+        on _ResourceId
+    | project LatestAwakeLog, LatestAwakeLogAgo, LatestSleepLog, LatestSleepLogAgo, State=iif(LatestAwakeLog > LatestSleepLog, "Running", "Stopped")
+
