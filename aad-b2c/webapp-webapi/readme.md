@@ -38,11 +38,20 @@ Create a service principal for the repo.
     
     az ad sp create-for-rbac --name $name --role $role --scopes $scope --sdk-auth
 
+Add the nuget package to the project:
 
+    dotnet add package Microsoft.Identity.Web --version 1.3.0
 
 Conclusions:
 * For a simple webapp authenticating users, no secret is required for the app registration.
 * When deployed to a WebApp, the WebApp does not need to configure auth.
+
+### Create a vscode webapi project
+Create the web api:
+    
+    dotnet new webapi -o webapi
+
+
 
 # Links
 [Quickstart: Create an ASP.NET Core web app in Azure](https://docs.microsoft.com/en-us/azure/app-service/quickstart-dotnetcore?pivots=platform-linux)\
@@ -50,3 +59,6 @@ Conclusions:
 [Dependency injection in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-5.0)\
 [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)\
 [ASP.NET Web Apps](https://dotnet.microsoft.com/apps/aspnet/web-apps)
+[Protect .NET Core API Using Azure AD B2C and MSAL](https://manojchoudhari.wordpress.com/2020/05/13/protect-net-core-api-using-azure-ad-b2c-and-msal/)
+[Razor Pages vs MVC - How Do They Differ?](https://exceptionnotfound.net/razor-pages-how-does-it-differ-from-mvc-in-asp-net-core/)
+
