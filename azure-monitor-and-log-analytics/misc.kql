@@ -1,0 +1,161 @@
+﻿AzureDiagnostics 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+| order by TimeGenerated desc
+| limit 100
+
+
+FunctionAppLogs 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+| order by TimeGenerated desc
+| limit 10
+
+
+AzureMetrics 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+| order by TimeGenerated desc
+| limit 100
+
+
+FunctionAppLogs 
+| where TimeGenerated between (datetime("2020-11-25 13:30:00") .. datetime("2020-11-25 14:30:00"))
+//| where Category == "Host.Startup"
+//| where Message == "Job host stopped"
+| order by TimeGenerated desc
+| limit 10
+
+AzureMetrics 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+| where Resource == "AFXTESTING"
+| where MetricName == "MemoryWorkingSet"
+| order by TimeGenerated desc
+| limit 100
+
+
+
+FunctionAppLogs 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+| where Category == "Host.Startup"
+| where Message == "Job host stopped"
+| union withsource=SourceTable kind=outer
+    (AzureMetrics 
+        | where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 14:32:00"))
+        | where Resource == "AFXTESTING"
+        | where MetricName == "MemoryWorkingSet"
+        | project TimeGenerated, Category=Type, Message=tostring(Total))
+| order by TimeGenerated desc
+| limit 400
+
+
+AzureDiagnostics 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+| order by TimeGenerated desc
+| limit 100
+
+
+FunctionAppLogs 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+| order by TimeGenerated desc
+| limit 10
+
+
+AzureMetrics 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+| order by TimeGenerated desc
+| limit 100
+
+
+FunctionAppLogs 
+| where TimeGenerated between (datetime("2020-11-25 13:30:00") .. datetime("2020-11-25 14:30:00"))
+//| where Category == "Host.Startup"
+//| where Message == "Job host stopped"
+| order by TimeGenerated desc
+| limit 100
+
+let dtStart = datetime("2020-11-24 14:30:00");
+let dtEnd = datetime("2020-11-25 09:00:00");
+let sResource = "AFXTESTING"
+AzureMetrics 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+//| where Resource == "AFXTESTING"
+| where MetricName == "MemoryWorkingSet"
+| order by TimeGenerated desc
+| limit 100
+
+
+FunctionAppLogs 
+//| where TimeGenerated between (datetime("2020-11-25 13:30:00") .. datetime("2020-11-25 18:30:00"))
+| where TimeGenerated > datetime("2020-11-25 13:30:00")
+| where (Category == "Host.Triggers.Warmup") or (Category == "Host.Startup" and Message startswith "Initializing Host")
+    or (Category == "Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService" and Message startswith "ServiceBusOptions")
+    or (Category == "Microsoft.Azure.WebJobs.Hosting.JobHostService" and Message == "Starting JobHost")
+    or (Category == "Host.Startup" and Message startswith "Starting Host")
+    or (Category == "Host.Startup" and Message endswith "functions loaded")
+    or (Category == "Host.Startup" and Message startswith "Found the following functions")
+    or (Category == "Host.Startup" and Message startswith "Job host started")
+    or (Category == "Microsoft.Azure.WebJobs.Hosting.JobHostService" and Message == "Stopping JobHost")
+    or (Category == "Host.Startup" and Message startswith "Stopping the listener")
+    or (Category == "Host.Startup" and Message == "Job host stopped")
+//| where Message == "Job host stopped"
+| order by TimeGenerated desc
+| limit 100
+
+
+let dtStart = datetime("2020-11-24 14:30:00");
+let dtEnd = datetime("2020-11-25 09:00:00");
+let sResource = "/EDGED2-FUNC-ACC";
+AzureMetrics 
+| where TimeGenerated between (datetime("2020-11-25 13:10:00") .. datetime("2020-11-25 15:00:00"))
+| where _ResourceId contains sResource
+| where MetricName == "MemoryWorkingSet"
+| order by TimeGenerated desc
+| limit 100
+
+let dtStart = datetime("2020-11-24 14:30:00");
+let dtEnd = datetime("2020-11-25 09:00:00");
+let sResource = "/EDGED2-FUNC-ACC";
+FunctionAppLogs 
+| where TimeGenerated between (dtStart .. dtEnd)
+| where _ResourceId contains sResource
+//| where TimeGenerated > dtStart
+| where (Category == "Host.Triggers.Warmup") or (Category == "Host.Startup" and Message startswith "Initializing Host")
+    or (Category == "Microsoft.Azure.WebJobs.Hosting.OptionsLoggingService" and Message startswith "ServiceBusOptions")
+    or (Category == "Microsoft.Azure.WebJobs.Hosting.JobHostService" and Message == "Starting JobHost")
+    or (Category == "Host.Startup" and Message startswith "Starting Host")
+    or (Category == "Host.Startup" and Message endswith "functions loaded")
+    or (Category == "Host.Startup" and Message startswith "Found the following functions")
+    or (Category == "Host.Startup" and Message startswith "Job host started")
+    or (Category == "Microsoft.Azure.WebJobs.Hosting.JobHostService" and Message == "Stopping JobHost")
+    or (Category == "Host.Startup" and Message startswith "Stopping the listener")
+    or (Category == "Host.Startup" and Message == "Job host stopped")
+| union withsource=SourceTable kind=outer
+    (AzureMetrics 
+        | where TimeGenerated between (dtStart .. dtEnd)
+        | where _ResourceId contains sResource
+        | where MetricName == "MemoryWorkingSet"
+        | project TimeGenerated, Category=Type, Message=tostring(Total))
+| order by TimeGenerated asc
+| limit 2000
+
+
+// This query checks if the azure function is running or stopped, as well as returns the latest sign of life/sleep
+
+let dtStart = ago(72h);
+let sResource = "/AFXTESTING";
+AzureMetrics 
+| where TimeGenerated > dtStart
+| where Total > 0
+| where _ResourceId contains sResource
+| where MetricName == "MemoryWorkingSet"
+| order by TimeGenerated desc
+| limit 1
+| project LatestAwakeLog=TimeGenerated, LatestAwakeLogAgo=(now()-TimeGenerated), _ResourceId
+| join (AzureMetrics 
+    | where TimeGenerated > dtStart
+    | where Total == 0.0
+    | where _ResourceId contains sResource
+    | where MetricName == "MemoryWorkingSet"
+    | order by TimeGenerated desc
+    | limit 1
+    | project LatestSleepLog= TimeGenerated, LatestSleepLogAgo=(now()-TimeGenerated), _ResourceId)
+    on _ResourceId
+| project LatestAwakeLog, LatestAwakeLogAgo, LatestSleepLog, LatestSleepLogAgo, State=iif(LatestAwakeLog > LatestSleepLog, "Running", "Stopped")
