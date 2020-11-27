@@ -159,3 +159,31 @@ AzureMetrics
     | project LatestSleepLog= TimeGenerated, LatestSleepLogAgo=(now()-TimeGenerated), _ResourceId)
     on _ResourceId
 | project LatestAwakeLog, LatestAwakeLogAgo, LatestSleepLog, LatestSleepLogAgo, State=iif(LatestAwakeLog > LatestSleepLog, "Running", "Stopped")
+
+
+
+
+
+
+let dtStart = ago(72h);
+let sResource = "/AFXTESTING";
+AzureMetrics 
+| where TimeGenerated > dtStart
+| where Total > 0
+| where _ResourceId contains sResource
+| where MetricName == "MemoryWorkingSet"
+| order by TimeGenerated desc
+| limit 1
+| project TimeGenerated, LatestAwakeLog=TimeGenerated, LatestAwakeLogAgo=(now() - TimeGenerated), _ResourceId
+| join (
+    AzureMetrics 
+    | where TimeGenerated > dtStart
+    | where Total == 0.0
+    | where _ResourceId contains sResource
+    | where MetricName == "MemoryWorkingSet"
+    | order by TimeGenerated desc
+    | limit 1
+    | project TimeGenerated, LatestSleepLog=TimeGenerated, LatestSleepLogAgo=(now() - TimeGenerated), _ResourceId)
+    on _ResourceId
+| extend SecondsOfSleep=toint((LatestSleepLog - LatestAwakeLog)/time(1s))
+| summarize AggregatedValue=max(SecondsOfSleep) by bin(TimeGenerated, 1m)

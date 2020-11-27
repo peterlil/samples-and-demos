@@ -85,3 +85,4 @@ This query checks if the azure function is currently running or stopped, as well
         on _ResourceId
     | project LatestAwakeLog, LatestAwakeLogAgo, LatestSleepLog, LatestSleepLogAgo, State=iif(LatestAwakeLog > LatestSleepLog, "Running", "Stopped")
 
+## Alerting queries
