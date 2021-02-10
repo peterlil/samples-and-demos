@@ -29,7 +29,7 @@ namespace AdoWebApp.Model
 
 
             // Bug #2
-            int devider = rand.Next(1, 10) - 1;
+            int devider = rand.Next(1, 5) - 1;
             int res = count / devider;
 
             return count;
