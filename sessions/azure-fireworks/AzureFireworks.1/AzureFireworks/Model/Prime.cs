@@ -30,7 +30,7 @@ namespace AzureFireworks.Model
 
             // Bug #2
             // To fix: Comment below 2 rows
-            int devider = 0:
+            int devider = 0;
             int res = count / devider;
 
             return count;
