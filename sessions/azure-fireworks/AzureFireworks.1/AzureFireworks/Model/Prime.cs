@@ -22,7 +22,7 @@ namespace AzureFireworks.Model
 
             // Bug #1
             // To fix: Change > to ==
-            if (count > 0)
+            if (count > 120000)
             {
                 throw new Exception("Abort, a prime cannot be zero (0)");
             }
