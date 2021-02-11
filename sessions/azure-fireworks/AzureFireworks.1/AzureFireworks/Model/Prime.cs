@@ -21,7 +21,7 @@ namespace AzureFireworks.Model
             }
 
             // Bug #1
-            // Make sure the prime number is greater than zero
+            // To fix: Change > to ==
             if (count > 0)
             {
                 throw new Exception("Abort, a prime cannot be zero (0)");
@@ -29,6 +29,7 @@ namespace AzureFireworks.Model
 
 
             // Bug #2
+            // To fix: Comment below 2 rows
             int devider = rand.Next(1, 5) - 1;
             int res = count / devider;
 
