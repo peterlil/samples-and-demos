@@ -30,7 +30,7 @@ namespace AzureFireworks.Model
 
             // Bug #2
             // To fix: Comment below 2 rows
-            int devider = rand.Next(1, 5) - 1;
+            int devider = 0:
             int res = count / devider;
 
             return count;
