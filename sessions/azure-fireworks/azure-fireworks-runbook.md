@@ -10,29 +10,37 @@ Create a *Resource Group* in your subscription in Azure. In this article we'll c
 
 ### Create an App Service Plan
 
-Create an *App Service Plan* and place it in the resource group. In this article it's called *ASP-AzureFireworks* and has the following configuration: \
-![App Service Plan](./../../img\ffw-ado\1-create-app-service-plan.jpg) \
+Create an *App Service Plan* and place it in the resource group. In this article it's called *ASP-AzureFireworks* and has the following configuration:
+
+![App Service Plan](./../../img/ffw-ado/1-create-app-service-plan.jpg)
+
 For this session it's important that it is a Windows plan and that it's at least an S1 plan as the activities below requires *Deployment Slots*.
 
 ### Create a Web App
 
-Create a *Web App* as shown in the images below. \
-Page 1 \
-![Web App page 1](./../../img\ffw-ado\2-create-web-app-p1.jpg) \
-Page 2 \
-![Web App page 2](./../../img\ffw-ado\3-create-web-app-p2.jpg) \
-Don't enable App Insights as that will be done in a later stage. 
+Create a *Web App* as shown in the images below.
+
+Page 1
+
+![Web App page 1](./../../img/ffw-ado/2-create-web-app-p1.jpg)
+
+Page 2
+
+![Web App page 2](./../../img/ffw-ado/3-create-web-app-p2.jpg)
+Don't enable App Insights as that will be done in a later stage.
 
 ### Create an Azure DevOps project
 
 Create an *Azure DevOps* project, in this article it's called *Azure Fireworks*.
-Make sure it uses git as source control. \
-![DevOps project creation](./../../img\ffw-ado\4-create-devops-project.jpg)
+Make sure it uses git as source control.
+
+![DevOps project creation](./../../img/ffw-ado/4-create-devops-project.jpg)
 
 ### Simulate load by creating four Logic Apps
 
-To simulate load, create four *Logic Apps* that are configured like this: \
-![Logic App](./../../img\ffw-ado\5-logic-app.jpg) \
+To simulate load, create four *Logic Apps* that are configured like this:
+
+![Logic App](./../../img/ffw-ado/5-logic-app.jpg) 
 
 The *Logic App* in the image is calling the start page. That is fine for one of the apps, the three other ones should target *https://<yourdomain>.azurewebsites.net/Prime*.
 
@@ -43,11 +51,11 @@ In order to get the sample app, clone the *samples-and-demos* repo to a local fo
 ### Add the solution to your Azure DevOps repo
 
 Open the project in Visual Studio 2019 and click *Create Git Repository...* in the *Git Changes* window. \
-![Create git repo](./../../img\ffw-ado\6-git-repo-1.jpg)
+![Create git repo](./../../img/ffw-ado/6-git-repo-1.jpg)
 
 In the new window, select *Existing remote* and enter the *Remote URL* (same URL you would use to clone from the remote), and click *Create and Push*.
 
-![Create git repo](./../../img\ffw-ado\6-git-repo-2.jpg)
+![Create git repo](./../../img/ffw-ado/6-git-repo-2.jpg)
 
 ## Session start
 
@@ -65,25 +73,25 @@ The simplest way for an individual developer to deploy a web app to Azure, is to
 
 Start publishing by right-clicking on the project in *Solution Explorer* and select *Publish...*. That will bring up a publishing wizard.
 
-![Publish page one](./../../img\ffw-ado\7-manual-publish-p1.jpg)
+![Publish page one](./../../img/ffw-ado/7-manual-publish-p1.jpg)
 
 Select Azure and click *Next*.
 
-![Publish page two](./../../img\ffw-ado\7-manual-publish-p2.jpg)
+![Publish page two](./../../img/ffw-ado/7-manual-publish-p2.jpg)
 
 Select *Azure App Service (Windows)* and click *Next*.
 
-![Publish page three](./../../img\ffw-ado\7-manual-publish-p3.jpg)
+![Publish page three](./../../img/ffw-ado/7-manual-publish-p3.jpg)
 
 End the wizard by clicking *Finish*. Now there's a publishing profile configured locally.
 
 Save all files, commit all changes and click *Publish* to deploy the app to the *Azure Web App*.
 
-![Publish](./../../img\ffw-ado\7-manual-publish-p4.jpg)
+![Publish](./../../img/ffw-ado/7-manual-publish-p4.jpg)
 
 When VS har finished publishing the app, it fires up the start page in your browser.
 
-![The app's start page](./../../img\ffw-ado\7-manual-publish-p5.jpg)
+![The app's start page](./../../img/ffw-ado/7-manual-publish-p5.jpg)
 
 ### Configure CI/CD
 
@@ -91,7 +99,7 @@ What is done so far is all fine for a project that you want to start small and f
 
 In th *Setup Azure Pipelines* window, the *Branch* field will populate itself, and in the *Subscription* field you need to select the right *Azure Subscription*. Then the *App Service* field will populate, and you can select the one created in the pre-requisites above.
 
-![Setup Azure pipeline window](./../../img\ffw-ado\8-setup-azure-pipeline.jpg)
+![Setup Azure pipeline window](./../../img/ffw-ado/8-setup-azure-pipeline.jpg)
 
 After clicking *OK*, VS will configure a build and a release pipeline, and it will trigger the build pipeline to start.
 
@@ -103,11 +111,11 @@ The build pipeline contains the basic building blocks you would expect from an A
 4. Publish - The build is packaged for deployment.
 5. Publish Artifact - The build is published for the release pipeline to deploy.
 
-![The build pipeline](./../../img\ffw-ado\8-build-pipeline.jpg)
+![The build pipeline](./../../img/ffw-ado/8-build-pipeline.jpg)
 
 The release pipeline is a simple one. It just takes the published artifact and deploys it to the web app we specified. By default it called the deployment stage for *Dev*, which may or may not be true. If not we need to fix the naming to relate to what it actually is.
 
-![The release pipeline](./../../img\ffw-ado\8-release-pipeline.jpg)
+![The release pipeline](./../../img/ffw-ado/8-release-pipeline.jpg)
 
 ### Out of the box telemetry
 
@@ -132,11 +140,11 @@ To get to the useful and detailed information, *Application Insights* should be 
 
 Click *Turn on Application Insights* as shown in the image below.
 
-![Configure application insights](./../../img\ffw-ado\9-configure-app-insights.jpg)
+![Configure application insights](./../../img/ffw-ado/9-configure-app-insights.jpg)
 
 Keep the defaults and click *Apply*.
 
-![Configure application insights](./../../img\ffw-ado\9-configure-app-insights-2.jpg)
+![Configure application insights](./../../img/ffw-ado/9-configure-app-insights-2.jpg)
 
 This action created an Application Insights resource, and added instrumenation to the web app.
 
@@ -147,8 +155,10 @@ TODO: Live Metrics/Failures.
 ### Deployment strategies - Blue/Green (A/B)
 
 Now we have a an application that works really bad. The website is hardly working.
-We need to fix the bug, but we need to make sure to not make the application to perform even worse. That leads us in to deployment strategies, and first we're about to explore the Blue/Green deployment method, which is also called A/B deployments. \
-This method involves two identical environments, let's call them production and pre-production, where production is what we have now, and pre-production is an environment where we can test our deployment before promoting it to production. In other words, pre-production will become production if it passed our quality bar. Production will at this point be demoted to pre-production. \
+We need to fix the bug, but we need to make sure to not make the application to perform even worse. That leads us in to deployment strategies, and first we're about to explore the Blue/Green deployment method, which is also called A/B deployments.
+
+This method involves two identical environments, let's call them production and pre-production, where production is what we have now, and pre-production is an environment where we can test our deployment before promoting it to production. In other words, pre-production will become production if it passed our quality bar. Production will at this point be demoted to pre-production.
+
 In *Azure Web Apps*, this can be achieved with deployment slots. A deployment slot is basically another *Web App* in the same *App Service Plan*. This means that different deployment slots share the same underlying infrastructure, hence deployment slots are not a good fit for performance and load testing. It is however a great fit for reassuring the functionality of the app, and when the quality is proven, the web app can seamlessly be promoted to production. One very positive effect of this is that once decided that the pre-production *Web App* should be promoted to production, there's no deployment to production needed. No configuration changes needed either. Only a switch where the user requests gets redirected to the new slot. This removes a lot of risks connected to deployments.
 
 #### Create the pre-production deployment slot
