@@ -20,16 +20,14 @@ namespace AzureFireworks.Model
                 if (PrimeTool.IsPrime(i++)) count++;
             }
 
-            // Bug #1
-            // To fix: Change > to ==
-            if (count > 120000)
+            // Bug
+            if (count > 50000)
             {
                 throw new Exception("Abort, a prime cannot be zero (0)");
             }
 
 
-            // Bug #2
-            // To fix: Comment below 2 rows
+            // Bug
             int devider = 0;
             int res = count / devider;
 
