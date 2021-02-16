@@ -10,7 +10,7 @@ namespace AzureFireworks.Model
         public static int RandomPrime()
         {
             Random rand = new Random(DateTime.Now.Millisecond);
-            int nth = rand.Next(50000, 100000);
+            int nth = rand.Next(30000, 60000);
             int count = 0;
             int i = 0;
 
