@@ -155,7 +155,7 @@ TODO: Live Metrics/Failures.
 ### Deployment strategies - Blue/Green (A/B)
 
 Now we have a an application that works really bad. The website is hardly working.
-We need to fix the bug, but we need to make sure to not make the application to perform even worse. That leads us in to deployment strategies, and first we're about to explore the Blue/Green deployment method, which is also called A/B deployments.
+We need to fix the bug, but we need to make sure to not make the application to perform even worse. That leads us in to deployment strategies, and first we're about to explore the Blue/Green deployment model, which is also called A/B deployments.
 
 This method involves two identical environments, let's call them production and pre-production, where production is what we have now, and pre-production is an environment where we can test our deployment before promoting it to production. In other words, pre-production will become production if it passed our quality bar. Production will at this point be demoted to pre-production.
 
